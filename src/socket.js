@@ -1,60 +1,63 @@
-const debug = false;
-const socket = window.io.connect(debug ? "ws://127.0.0.1:8081" : "wss://g.eclare.work:8443");
-
+// const debug = false;
+// const socket = window.io.connect(debug ? "ws://127.0.0.1:8081" : "wss://g.eclare.work:8443");
+const socket = {
+  on: () => {},
+  emit: () => {},
+};
 export default {
-    sid: null,
-    sendToken(token, callback) {
-        socket.on("loggedIn", sid => {
-            console.say("loggedin", sid);
-            callback(true);
-            this.sid = sid;
-        });
-        
-        socket.on("loginErr", data => {
-            console.say("login err", data);
-            callback(false);
-        });
+  sid: null,
+  sendToken(token, callback) {
+    socket.on("loggedIn", (sid) => {
+      console.say("loggedin", sid);
+      callback(true);
+      this.sid = sid;
+    });
 
-        console.say("send token:", token);
-        socket.emit("login", token);
-    },
+    socket.on("loginErr", (data) => {
+      console.say("login err", data);
+      callback(false);
+    });
 
-    join(nick, callback) {
-        socket.on("join", data => {
-            console.say(data);
-            this.sid = data.id;
-            callback(data.token);
-        })
-        socket.emit("join", nick);
-    },
+    console.say("send token:", token);
+    socket.emit("login", token);
+  },
 
-    getChat(callback) {
-        socket.on("allChats", data => {
-            callback(data);
-        });
-        socket.emit("getChats");
-    },
+  join(nick, callback) {
+    socket.on("join", (data) => {
+      console.say(data);
+      this.sid = data.id;
+      callback(data.token);
+    });
+    socket.emit("join", nick);
+  },
 
-    sendChat(msg) {
-        socket.emit("chat", msg);
-    },
+  getChat(callback) {
+    socket.on("allChats", (data) => {
+      callback(data);
+    });
+    socket.emit("getChats");
+  },
 
-    getMembers(callback) {
-        console.say("request get members");
-        socket.on("allMembers", data => {
-            callback(data);
-        })
-        socket.emit("getMembers");
-    },
+  sendChat(msg) {
+    socket.emit("chat", msg);
+  },
 
-    addEvent(eventName, callback) {
-        socket.on(eventName, callback);
-    },
+  getMembers(callback) {
+    console.say("request get members");
+    socket.on("allMembers", (data) => {
+      callback(data);
+    });
+    socket.emit("getMembers");
+  },
 
-    updateAvatar(url, callback) {
-        socket.on("avatarUpdated", () => {
-            callback();
-        });
-        socket.emit("updateAvatar", url);
-    }
-}
+  addEvent(eventName, callback) {
+    socket.on(eventName, callback);
+  },
+
+  updateAvatar(url, callback) {
+    socket.on("avatarUpdated", () => {
+      callback();
+    });
+    socket.emit("updateAvatar", url);
+  },
+};
