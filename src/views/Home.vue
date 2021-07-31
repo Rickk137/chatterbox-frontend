@@ -1,62 +1,7 @@
 <template>
   <v-content>
     <div class="dc-container">
-      <nav class="guilds">
-        <v-card
-          dark
-          flat
-          tile
-          width="100%"
-          height="100%"
-        >
-          <v-avatar
-            class="round-icon"
-            @click="clickIcon"
-          >
-            <v-icon size="30">mdi-check</v-icon>
-          </v-avatar>
-          <v-avatar
-            class="round-icon"
-            @click="clickIcon"
-          >
-            <v-img src="https://media.discordapp.net/attachments/603940670914297867/677452451070214154/3_0-00-00-00.png?width=513&height=513"></v-img>
-            <!-- <v-icon size="30">mdi-check</v-icon> -->
-          </v-avatar>
-          <v-avatar
-            class="round-icon"
-            @click="clickIcon"
-          >
-            <v-img src="https://media.discordapp.net/attachments/603940670914297867/628063294485430284/unlimit.jpg?width=513&height=513"></v-img>
-          </v-avatar>
-          <v-avatar
-            class="round-tools-icon"
-            @click="clickIcon"
-          >
-            <v-icon
-              size="30"
-              class="icon"
-            >mdi-plus</v-icon>
-          </v-avatar>
-          <v-avatar
-            class="round-tools-icon"
-            @click="clickIcon"
-          >
-            <v-icon
-              size="30"
-              class="icon"
-            >mdi-magnify</v-icon>
-          </v-avatar>
-          <v-avatar
-            class="round-tools-icon"
-            @click="clickIcon"
-          >
-            <v-icon
-              size="30"
-              class="icon"
-            >mdi-download</v-icon>
-          </v-avatar>
-        </v-card>
-      </nav>
+      <Channels />
 
       <div class="base">
         <div class="base-content">
@@ -186,6 +131,7 @@
 </template>
 
 <script>
+import Channels from "@/components/Channels.vue";
 import Chat from "@/components/Chat.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Members from "@/components/Members.vue";
@@ -197,6 +143,7 @@ export default {
   name: "Home",
   components: {
     Chat,
+    Channels,
     Sidebar,
     Members,
     AvatarChanger
@@ -213,10 +160,6 @@ export default {
   },
 
   methods: {
-    clickIcon () {
-      console.log(this.item);
-    },
-
     getCh () {
       return (this.cache =
         this.$store.state.currentChannel === undefined

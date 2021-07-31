@@ -28,18 +28,24 @@ body {
 }
 
 .round-icon {
+  cursor: pointer;
   border-radius: 50% !important;
   margin: 10px;
   transition: 0.3s;
   background: #3f51b5;
+  &.active {
+    border-radius: 30% !important;
+    border: 2px solid white;
+  }
 }
 
-.round-icon:hover {
+.round-icon:hover:not(.active) {
   border-radius: 30% !important;
   background: rgb(173, 187, 250) !important;
 }
 
 .round-tools-icon {
+  cursor: pointer;
   border-radius: 50% !important;
   margin: 10px;
   transition: 0.3s;
