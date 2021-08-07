@@ -11,6 +11,8 @@ export async function login({ dispatch, commit }, payload) {
 
     dispatch("storeToken", access_token);
 
+    dispatch("chat/getRooms");
+
     router.push("/").catch(() => {});
   } catch (error) {
     console.log(error);
@@ -49,14 +51,13 @@ export async function fetchUser({ dispatch, commit }) {
 }
 
 export function storeToken({ commit }, token) {
-  console.log("storeToken", token);
   commit("SET_TOKEN", token);
   axios.defaults.headers["Authorization"] = token ? `Bearer ${token}` : "";
 }
 
 export async function logout({ commit }) {
   commit("SET_TOKEN", null);
-  commit("SET_USER", {});
+  commit("SET_USER", null);
 
   axios.defaults.headers.Authorization = "";
 

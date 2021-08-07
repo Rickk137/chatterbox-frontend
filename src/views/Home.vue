@@ -72,9 +72,10 @@
                       </v-btn>
                     </div>
                   </div>
+
                 </div>
 
-                <v-text-field
+                <!-- <v-text-field
                   dark
                   flat
                   solo-inverted
@@ -83,7 +84,29 @@
                   label="Search"
                   class="hidden-sm-and-down mx-2 head-search"
                   autocomplete="off"
-                ></v-text-field>
+                ></v-text-field> -->
+
+                <v-menu
+                  bottom
+                  offset-y
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      dark
+                      icon
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <v-list>
+                    <v-list-item @click="logout">
+                      Logout
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </div>
             </v-card>
 
@@ -136,6 +159,7 @@ import Chat from "@/components/Chat.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Members from "@/components/Members.vue";
 import AvatarChanger from "@/components/AvatarChanger";
+import { mapActions } from 'vuex';
 
 import socket from "../socket";
 
@@ -160,6 +184,10 @@ export default {
   },
 
   methods: {
+    ...mapActions('auth', [
+      'logout',
+    ]),
+
     getCh () {
       return (this.cache =
         this.$store.state.currentChannel === undefined

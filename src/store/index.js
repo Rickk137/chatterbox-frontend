@@ -2,8 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
-import chatModule from "./chat";
 import authModuel from "./auth";
+import chatModule from "./chat/index";
 
 Vue.use(Vuex);
 
@@ -86,6 +86,9 @@ export default new Vuex.Store({
   actions: {
     init({ dispatch, state }) {
       dispatch("auth/storeToken", state.auth.token);
+      if (state.auth.token) {
+        dispatch("chat/getRooms");
+      }
     },
   },
   modules: {
