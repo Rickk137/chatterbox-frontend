@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 import chatModule from "./chat";
+import authModuel from "./auth";
 
 Vue.use(Vuex);
 
@@ -81,8 +83,18 @@ export default new Vuex.Store({
       store.loggedIn = bool;
     },
   },
-  actions: {},
+  actions: {
+    init({ dispatch, state }) {
+      dispatch("auth/storeToken", state.auth.token);
+    },
+  },
   modules: {
     chat: chatModule,
+    auth: authModuel,
   },
+  plugins: [
+    createPersistedState({
+      paths: ["auth"],
+    }),
+  ],
 });
