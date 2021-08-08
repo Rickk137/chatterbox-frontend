@@ -21,8 +21,13 @@ export default new Vuex.Store({
     showAC: false,
     chats: [],
     loggedIn: false,
+
+    snackbar: null,
   },
   mutations: {
+    showSnackbar(store, snackbar) {
+      store.snackbar = snackbar;
+    },
     updateChannels(store, list) {
       store.channels = list;
     },

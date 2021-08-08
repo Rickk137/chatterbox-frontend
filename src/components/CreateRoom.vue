@@ -68,6 +68,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'showSnackbar',
+    ]),
     ...mapMutations('chat', [
       'ADD_ROOM',
     ]),
@@ -75,7 +78,10 @@ export default {
       if (this.$refs.form.validate()) {
         try {
           const { data } = await this.axios.post("rooms", { name: this.name });
+
           this.ADD_ROOM(data);
+          this.showSnackbar({ content: 'Room added', color: 'success' });
+
           this.clear();
           this.$emit('close');
         } catch (error) {
