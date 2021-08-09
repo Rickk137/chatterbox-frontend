@@ -1,3 +1,4 @@
+import Vue from "vue";
 import axios from "axios";
 import router from "@/router";
 
@@ -11,7 +12,9 @@ export async function login({ dispatch, commit }, payload) {
 
     dispatch("storeToken", access_token);
 
-    dispatch("chat/getRooms");
+    dispatch("init", null, {
+      root: true,
+    });
 
     router.push("/").catch(() => {});
   } catch (error) {
@@ -60,6 +63,8 @@ export async function logout({ commit }) {
   commit("SET_USER", null);
 
   axios.defaults.headers.Authorization = "";
+
+  Vue.prototype.$vueSocketIo?.disconnect();
 
   router.push("/auth").catch(() => {});
 }

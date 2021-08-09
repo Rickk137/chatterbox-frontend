@@ -92,6 +92,7 @@ export default new Vuex.Store({
     init({ dispatch, state }) {
       dispatch("auth/storeToken", state.auth.token);
       if (state.auth.token) {
+        Vue.prototype.$vueSocketIo?.connect(state.auth.token);
         dispatch("chat/getRooms");
       }
     },

@@ -3,7 +3,9 @@ import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
 import store from "./store";
+
 import "./plugins/axios";
+import "./plugins/socket.io";
 
 Vue.config.productionTip = false;
 

@@ -120,7 +120,7 @@
                 <div class="chat-form">
                   <v-text-field
                     class="mx-5 my-3 chat-form-tf"
-                    label="メッセージを送信"
+                    label="Send message..."
                     solo
                     flat
                     v-model="msginform"
@@ -161,8 +161,6 @@ import Members from "@/components/Members.vue";
 import AvatarChanger from "@/components/AvatarChanger";
 import { mapActions } from 'vuex';
 
-import socket from "../socket";
-
 export default {
   name: "Home",
   components: {
@@ -200,16 +198,13 @@ export default {
     },
 
     sendChat () {
-      if (this.msginform == "") return;
-      console.say("form-msg:", this.msginform);
-      socket.sendChat(this.msginform);
-      this.msginform = "";
+      this.$socket.emit('message', {
+        content: this.msginform,
+        receiver: '61110eeff81c921f0e032d2f',
+        type: 1
+      })
     }
   },
-
-  mounted () {
-    console.say("home.vue mount");
-  }
 };
 </script>
 

@@ -77,7 +77,6 @@ export default {
       'login',
     ]),
     handleLogin () {
-      console.log('handleLogin: ',)
       this.login({ email: this.email, password: this.password });
     }
   },
