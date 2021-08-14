@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 import Logger from "./logger";
 import Listener from "./listener";
+import store from "../store";
 import Vue from "vue";
 
 export default class SocketIO {
@@ -30,6 +31,17 @@ export default class SocketIO {
     });
     Vue.prototype.$socket = this.io;
     this.listener = new Listener(this.io);
+
+    this.io.onevent = (packet) => {
+      let [event, ...args] = packet.data;
+
+      if (args.length === 1) args = args[0];
+
+      if (event === "message") {
+        store.dispatch("chat/newMessage", args);
+      }
+    };
+
     Logger.info("Vue-Socket.io connected!");
   }
 

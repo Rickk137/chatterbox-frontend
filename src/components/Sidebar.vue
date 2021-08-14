@@ -26,14 +26,12 @@
               <v-list-item
                 v-for="(item, i) in rooms"
                 :key="i"
+                :to="`/rooms/${item._id}`"
               >
-                <v-list-item-icon>
-                  <v-icon v-text="'mdi-bell-alert'"></v-icon>
-                </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
                     class="channel-title"
-                    v-text="item.name"
+                    v-text="`# ${item.name}`"
                   ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -87,7 +85,7 @@
         </v-list-item-content>
       </v-list-item>
     </v-card>
-    <CreateRoom
+    <RoomDialog
       :show="createRoomModal"
       @close="createRoomModal = false"
     />
@@ -96,11 +94,11 @@
 
 <script>
 import { mapState } from "vuex";
-import CreateRoom from '@/components/CreateRoom';
+import RoomDialog from '@/components/room/RoomDialog';
 
 export default {
   components: {
-    CreateRoom
+    RoomDialog
   },
 
   data () {

@@ -3,7 +3,9 @@ import VueRouter from "vue-router";
 
 import store from "@/store";
 
-import Home from "../views/Home.vue";
+import MainLayout from "../layout/Main.vue";
+import Room from "../views/Room.vue";
+import Pv from "../views/Pv.vue";
 import Login from "../views/Login.vue";
 
 Vue.use(VueRouter);
@@ -11,9 +13,24 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    component: MainLayout,
     meta: { auth: true },
+    children: [
+      {
+        path: "",
+        name: "Home",
+      },
+      {
+        path: "/rooms/:roomId",
+        name: "Room",
+        component: Room,
+      },
+      {
+        path: "/pv/:userId",
+        name: "Private",
+        component: Pv,
+      },
+    ],
   },
   {
     path: "/auth",

@@ -5,8 +5,8 @@
 
       <div class="base">
         <div class="base-content">
-          <!-- here side -->
           <Sidebar class="hidden-sm-and-down"></Sidebar>
+
           <v-navigation-drawer
             class="hidden-md-and-up sidebar-in-drawer"
             v-model="leftDrawer"
@@ -110,41 +110,11 @@
               </div>
             </v-card>
 
-            <div class="chat-screen">
-              <div class="chat-content">
-                <div class="messages">
-                  <div class="message-container">
-                    <Chat></Chat>
-                  </div>
-                </div>
-                <div class="chat-form">
-                  <v-text-field
-                    class="mx-5 my-3 chat-form-tf"
-                    label="Send message..."
-                    solo
-                    flat
-                    v-model="msginform"
-                    autocomplete="off"
-                    @keyup.enter="sendChat"
-                    @keypress="setCanMessageSubmit"
-                  >
-                  </v-text-field>
-                </div>
-              </div>
-              <div class="members hidden-sm-and-down">
-                <Members></Members>
-              </div>
-              <v-navigation-drawer
-                class="hidden-md-and-up"
-                v-model="drawer"
-                color="#1E1E1E"
-                right
-                dark
-                absolute
-              >
-                <Members></Members>
-              </v-navigation-drawer>
-            </div>
+            <router-view
+              v-if="token"
+              class="chat-screen"
+            ></router-view>
+
           </div>
         </div>
       </div>
@@ -155,30 +125,29 @@
 
 <script>
 import Channels from "@/components/Channels.vue";
-import Chat from "@/components/Chat.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import Members from "@/components/Members.vue";
 import AvatarChanger from "@/components/AvatarChanger";
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: "Home",
+  name: "MainLayout",
+
   components: {
-    Chat,
     Channels,
     Sidebar,
-    Members,
     AvatarChanger
   },
   data () {
     return {
       cache: 0,
       mini: true,
-      drawer: false,
       leftDrawer: false,
       canMessageSubmit: false,
-      msginform: ""
     };
+  },
+
+  computed: {
+    ...mapState('auth', ['token'])
   },
 
   methods: {
@@ -192,18 +161,6 @@ export default {
           ? this.cache
           : this.$store.state.currentChannel);
     },
-
-    setCanMessageSubmit () {
-      this.canMessageSubmit = true;
-    },
-
-    sendChat () {
-      this.$socket.emit('message', {
-        content: this.msginform,
-        receiver: '61110eeff81c921f0e032d2f',
-        type: 1
-      })
-    }
   },
 };
 </script>

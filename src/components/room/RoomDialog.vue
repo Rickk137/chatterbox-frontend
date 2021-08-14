@@ -6,8 +6,8 @@
   >
 
     <v-card>
-      <v-card-title>
-        <span class="text-h5">User Profile</span>
+      <v-card-title class="text-h4 text-center mb-2">
+        Create Room
       </v-card-title>
       <v-card-text>
         <v-form
@@ -15,12 +15,14 @@
           v-model="valid"
           lazy-validation
         >
+
           <v-text-field
             v-model="name"
-            :counter="10"
+            :counter="20"
             :rules="nameRules"
-            label="Name"
+            label="Room Name"
             required
+            prepend-icon="mdi-book-multiple-outline"
           ></v-text-field>
 
         </v-form>
@@ -52,6 +54,10 @@ import { mapMutations } from 'vuex';
 
 export default {
   props: {
+    roomId: {
+      type: String,
+      default: ''
+    },
     show: {
       type: Boolean,
       default: false
@@ -63,7 +69,7 @@ export default {
       name: '',
       nameRules: [
         v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => (v && v.length <= 20) || 'Name must be less than 20 characters',
       ],
     }
   },
@@ -77,11 +83,16 @@ export default {
     async handleSubmit () {
       if (this.$refs.form.validate()) {
         try {
-          const { data } = await this.axios.post("rooms", { name: this.name });
+          if (this.updateForm) {
+            console.log('salam')
+          } else {
 
-          this.ADD_ROOM(data);
-          this.showSnackbar({ content: 'Room added', color: 'success' });
+            const { data } = await this.axios.post("rooms", { name: this.name });
 
+            this.ADD_ROOM(data);
+            this.showSnackbar({ content: 'Room added', color: 'success' });
+
+          }
           this.clear();
           this.$emit('close');
         } catch (error) {
@@ -96,6 +107,9 @@ export default {
     },
   },
   computed: {
+    updateForm () {
+      return !!this.roomId;
+    },
     showDialog: {
       get: function () {
         return this.show

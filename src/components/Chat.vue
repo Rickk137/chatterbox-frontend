@@ -1,56 +1,68 @@
 <template>
-  <v-list three-line dark>
-    <template v-for="item in $store.state.chats" class="chat-list">
-      <v-list-item :key="item.title" class="chat-list-item">
-        <v-list-item-avatar>
-          <v-img :src="item.avatar"></v-img>
-        </v-list-item-avatar>
+  <div class="chat-content">
+    <div class="messages">
+      <div class="message-container">
+        <Messages :messages="messages"/>
 
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-          <v-list-item-subtitle>{{ item.subtitle }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-    </template>
-  </v-list>
+        <div class="chat-form">
+          <v-text-field
+            class="mx-5 my-3 chat-form-tf"
+            label="Send message..."
+            solo
+            flat
+            v-model="msginform"
+            autocomplete="off"
+            @keyup.enter="sendChat"
+            @keypress="setCanMessageSubmit"
+          >
+          </v-text-field>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import socket from "../socket";
+import Messages from '@/components/common/Messages.vue';
 
 export default {
-  data() {
+  props: {
+    receiverType: {
+      type: Number,
+      required: true
+    },
+    receiver: {
+      type: String,
+      required: true
+    },
+    messages: {
+      type: Array,
+      default: () => ([])
+    },
+  },
+  components: {
+    Messages,
+  },
+  data () {
     return {
-      chats: []
+      chats: [],
+      msginform: ""
     };
   },
 
-  mounted() {
-    console.say("Chat.vue mount");
-    socket.getChat(data => {
-      // all messages
-      console.say("all msgs:", data);
-      for (let i of data) {
-        this.$store.commit("pushChat", i);
-      }
-      setTimeout(this.scrollList, 10);
-    });
-
-    socket.addEvent("chat", data => {
-      console.say("got chat:", data);
-      //this.pushChat(data);
-      this.$store.commit("pushChat", data);
-    });
-  },
-
   methods: {
-    pushChat(data) {
-      this.chats.push({
-        avatar: data.user.img || "guest.png",
-        title: data.user.nick,
-        subtitle: data.msg
-      });
+    setCanMessageSubmit () {
+      this.canMessageSubmit = true;
     },
+    sendChat () {
+      this.$socket.emit('message', {
+        content: this.msginform,
+        receiver: this.receiver,
+        type: this.receiverType
+      })
+
+      this.msginform = '';
+    }
   }
 };
 </script>

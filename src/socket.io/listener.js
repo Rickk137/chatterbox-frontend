@@ -23,6 +23,7 @@ export default class SocketIOListener {
 
   constructor(io) {
     this.io = io;
+
     this.register();
   }
 

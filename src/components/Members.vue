@@ -1,11 +1,29 @@
 <template>
-  <v-card width="100%" dark flat tile class="mcard">
-    <v-list rounded dense>
+  <v-card
+    width="100%"
+    dark
+    flat
+    tile
+    class="mcard"
+  >
+    <v-list
+      rounded
+      dense
+    >
       <v-subheader>ONLINE ({{ $store.state.members.length }})</v-subheader>
-      <v-list-item-group v-model="member" color="">
-        <v-list-item v-for="(item, i) in $store.state.members" :key="i">
+      <v-list-item-group
+        v-model="member"
+        color=""
+      >
+        <v-list-item
+          v-for="(item, i) in $store.state.members"
+          :key="i"
+        >
           <v-list-item-avatar>
-            <img :src="item.img" alt="alt" />
+            <img
+              :src="item.img"
+              alt="alt"
+            />
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title
@@ -15,23 +33,60 @@
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
+
     </v-list>
+
+    <v-list
+      width="100%"
+      dense
+    >
+      <v-list-item @click="showAddMember = true">
+        <v-list-item-icon>
+          <v-icon v-text="'mdi-plus'"></v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title
+            class="channel-title"
+            v-text="'Add Member'"
+          ></v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
+    <v-dialog
+      v-model="showAddMember"
+      max-width="400px"
+      dark
+    >
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Add Member to the Room</span>
+        </v-card-title>
+
+        <v-card-text>
+          <UserSelect v-model="members" />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 import socket from "../socket";
+import UserSelect from './common/UserSelect.vue';
 
 export default {
-  data() {
+  data () {
     return {
       member: 0,
+      showAddMember: false,
+      members: []
     };
   },
-
-  updated() {},
-
-  mounted() {
+  components: {
+    UserSelect,
+  },
+  mounted () {
     if (this.$store.state.membersComponentMounted) return;
     this.$store.commit("membersMounted");
     console.say("members mount");
