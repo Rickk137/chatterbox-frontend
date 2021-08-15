@@ -9,7 +9,11 @@
     ></Chat>
 
     <div class="members hidden-sm-and-down">
-      <Members></Members>
+      <Members
+        :roomId="receiver"
+        :members="members"
+        @add-member="addMember"
+      ></Members>
     </div>
 
     <v-navigation-drawer
@@ -20,7 +24,11 @@
       dark
       absolute
     >
-      <Members></Members>
+      <Members
+        :roomId="receiver"
+        :members="members"
+        @add-member="addMember"
+      ></Members>
     </v-navigation-drawer>
 
   </div>
@@ -39,6 +47,7 @@ export default {
   data () {
     return {
       drawer: false,
+      members: []
     }
   },
   components: {
@@ -47,6 +56,9 @@ export default {
   },
   methods: {
     ...mapActions('chat', ['getRoomMessages']),
+    addMember (user) {
+      this.members.push(user);
+    },
     loadMore ($state) {
       this.getRoomMessages({ roomId: this.receiver, loadMore: true }).then((data) => {
         if (!data || data.length < LIMIT) {
@@ -61,17 +73,28 @@ export default {
         const msgElement = document.getElementById("messages");
         msgElement.scrollTop = msgElement.scrollHeight;
       })
+    },
+    async getRoomInfo () {
+      try {
+        const { data } = await this.axios.get("rooms/" + this.receiver);
+        this.members = (data.members || []).map(member => ({ ...member.userId, role: member.role }));
+      } catch (error) {
+        console.log('err:', error)
+      }
     }
   },
   mounted () {
     if (this.receiver) {
       this.getRoomMessages({ roomId: this.receiver }).then(this.scrollToEnd);
+      this.getRoomInfo();
     }
   },
   watch: {
     receiver (newValue) {
-      if (newValue)
+      if (newValue) {
         this.getRoomMessages({ roomId: newValue }).then(this.scrollToEnd);
+        this.getRoomInfo();
+      }
     }
   },
   computed: {

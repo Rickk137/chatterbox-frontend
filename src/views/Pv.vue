@@ -4,8 +4,9 @@
       :receiverType="receiverType"
       :receiver="receiver"
       :messages="messages"
+      @loadMore="loadMore"
+      @scrollToEnd="scrollToEnd"
     ></Chat>
-
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import { mapState, mapActions } from 'vuex';
 import { receiverTypes } from "@/constants/types";
 import Chat from "@/components/Chat.vue";
+import { LIMIT } from "@/constants/types";
 
 export default {
   name: "Users",
@@ -27,18 +29,30 @@ export default {
   },
   methods: {
     ...mapActions('chat', ['getPvMessages']),
+    loadMore ($state) {
+      this.getPvMessages({ userId: this.receiver, loadMore: true }).then((data) => {
+        if (!data || data.length < LIMIT) {
+          $state.complete();
+        } else {
+          $state.loaded();
+        }
+      });
+    },
+    scrollToEnd () {
+      this.$nextTick(() => {
+        const msgElement = document.getElementById("messages");
+        msgElement.scrollTop = msgElement.scrollHeight;
+      })
+    }
   },
   mounted () {
     if (this.receiver)
-      this.getPvMessages({ userId: this.receiver, page: 1 });
+      this.getPvMessages({ userId: this.receiver }).then(this.scrollToEnd);
   },
   watch: {
     receiver (newValue,) {
       if (newValue)
-        this.getPvMessages({ userId: newValue, page: 1 }).then(() => {
-          const msgElement = document.getElementById("messages");
-          msgElement.scrollTop = msgElement.scrollHeight;
-        });
+        this.getPvMessages({ userId: newValue }).then(this.scrollToEnd);
     }
   },
   computed: {

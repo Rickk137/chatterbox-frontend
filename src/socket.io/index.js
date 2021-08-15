@@ -39,6 +39,10 @@ export default class SocketIO {
 
       if (event === "message") {
         store.dispatch("chat/newMessage", args);
+      } else if (event === "update-rooms") {
+        console.log('update-rooms!')
+        store.dispatch("chat/getRooms", args);
+        this.io.emit("join-room");
       }
     };
 

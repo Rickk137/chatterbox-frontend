@@ -77,6 +77,7 @@ export default {
   -moz-animation: show-chat-even 0.15s 1 ease-in;
   -webkit-animation: show-chat-even 0.15s 1 ease-in;
   align-self: flex-end;
+  text-align: right;
   color: #0ec879;
 }
 .messages li.other {

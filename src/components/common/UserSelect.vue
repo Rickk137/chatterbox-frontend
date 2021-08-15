@@ -1,13 +1,12 @@
 <template>
   <v-select
-    v-model="list"
-    :items="users"
-    label="Select"
-    multiple
-    chips
-    deletable-chips
-    item-text="name"
-    item-value="_id"
+    v-model="user"
+    :items="list"
+    label="User"
+    outlined
+    dark
+    return-object
+    :item-text="(item) => `${item.username} - ${item.name} ${item.family} ` "
     placeholder="Start typing to Search"
     prepend-icon="mdi-account"
   />
@@ -17,6 +16,10 @@
 export default {
   props: {
     value: {
+      type: [Object, null],
+      default: null
+    },
+    exclude: {
       type: Array,
       default: () => ([])
     },
@@ -24,7 +27,7 @@ export default {
   data () {
     return {
       isLoading: false,
-      users: []
+      users: [],
     }
   },
 
@@ -33,7 +36,10 @@ export default {
   },
 
   computed: {
-    list: {
+    list () {
+      return this.users.filter(user => !this.exclude.find(item => item === user._id))
+    },
+    user: {
       get: function () {
         return this.value
       },

@@ -35,18 +35,16 @@ export function ADD_ROOM_MESSAGE(state, msg) {
   state.roomMessages = roomMessages;
 }
 
-export function UPDATE_ROOM_MESSAGES(state, { list, roomId, page }) {
+export function UPDATE_ROOM_MESSAGES(state, { list, roomId }) {
   const roomMessages = { ...state.roomMessages };
   roomMessages[roomId] = roomMessages[roomId] || {
     messages: [],
-    page: 0,
     notification: false,
   };
 
   let messages = roomMessages[roomId].messages || [];
   messages = [...list, ...messages];
   roomMessages[roomId].messages = messages;
-  roomMessages[roomId].page = page;
   roomMessages[roomId].notification = false;
   roomMessages[roomId].noMore = list.length < LIMIT;
 
@@ -75,18 +73,16 @@ export function ADD_PV_MESSAGE(state, msg) {
   state.pvMessages = pvMessages;
 }
 
-export function UPDATE_PV_MESSAGES(state, { list, userId, page }) {
+export function UPDATE_PV_MESSAGES(state, { list, userId }) {
   const pvMessages = { ...state.pvMessages };
   pvMessages[userId] = pvMessages[userId] || {
     messages: [],
-    page: 0,
     notification: false,
   };
 
   let messages = pvMessages[userId].messages || [];
   messages = [...list, ...messages];
   pvMessages[userId].messages = messages;
-  pvMessages[userId].page = page;
   pvMessages[userId].notification = false;
   pvMessages[userId].noMore = list.length < LIMIT;
 

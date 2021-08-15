@@ -7,28 +7,32 @@
     class="mcard"
   >
     <v-list
-      rounded
+      class="server-info flex-1"
       dense
     >
-      <v-subheader>ONLINE ({{ $store.state.members.length }})</v-subheader>
-      <v-list-item-group
-        v-model="member"
-        color=""
-      >
+      <v-subheader>Members ({{ members.length }})</v-subheader>
+      <v-list-item-group v-model="member">
         <v-list-item
-          v-for="(item, i) in $store.state.members"
+          v-for="(item, i) in members"
           :key="i"
+          :to="'/pv/' + item._id"
         >
-          <v-list-item-avatar>
-            <img
+          <!-- <img
               :src="item.img"
               alt="alt"
-            />
-          </v-list-item-avatar>
+            /> -->
+          <v-icon
+            size="20"
+            class="icon mr-2"
+          >mdi-account</v-icon>
           <v-list-item-content>
             <v-list-item-title
               class="channel-title"
-              v-text="item.name"
+              v-text="`${item.username}`"
+            ></v-list-item-title>
+            <v-list-item-title
+              class="channel-title"
+              v-text="`${item.name} ${item.family}`"
             ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -64,58 +68,66 @@
         </v-card-title>
 
         <v-card-text>
-          <UserSelect v-model="members" />
+          <UserSelect
+            v-model="newUser"
+            :exclude="members.map(item => item._id)"
+          />
+          <v-btn
+            depressed
+            dark
+            large
+            :disabled="!newUser"
+            @click="addUser"
+          >
+            Add
+          </v-btn>
         </v-card-text>
+
       </v-card>
     </v-dialog>
   </v-card>
 </template>
 
 <script>
-import socket from "../socket";
 import UserSelect from './common/UserSelect.vue';
 
 export default {
+  props: {
+    members: {
+      type: Array,
+      default: () => ([])
+    },
+    roomId: {
+      type: String,
+      default: ''
+    },
+  },
   data () {
     return {
       member: 0,
       showAddMember: false,
-      members: []
+      newUser: null
     };
   },
   components: {
     UserSelect,
   },
-  mounted () {
-    if (this.$store.state.membersComponentMounted) return;
-    this.$store.commit("membersMounted");
-    console.say("members mount");
-    socket.getMembers((data) => {
-      console.say("getMem", data);
-      this.$store.commit("pushMembers", data);
-    });
-    socket.addEvent("memberJoin", (data) => {
-      console.say("memberJoin", data);
-      if (data.id == socket.sid) {
-        //isMe
-        this.member = this.$store.state.members.length;
-        this.$store.commit("updateAvatar", data.user.img || "guest.png");
-        this.$store.commit("setNick", data.user.nick);
+  methods: {
+    async addUser () {
+      if (!this.newUser || !this.roomId) return;
+      try {
+        await this.axios.post(`/rooms/${this.roomId}/member`,
+          {
+            userId: this.newUser._id
+          })
+        this.$emit('add-member', this.newUser)
+        this.$socket.emit('update-rooms', this.newUser._id);
+        this.showAddMember = false;
+        this.newUser = null;
+      } catch (error) {
+        console.log(error)
       }
-      this.$store.commit("pushMembers", data);
-
-      this.$store.commit("pushChat", {
-        user: {
-          nick: "SERVER",
-          img: this.$store.state.ownerIcon,
-        },
-        msg: data.user.nick + " has joined the chat.",
-      });
-    });
-
-    socket.addEvent("memberLeave", (sid) => {
-      this.$store.commit("removeMember", sid);
-    });
+    }
   },
 };
 </script>

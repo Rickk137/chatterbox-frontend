@@ -149,19 +149,10 @@ export default {
       'pvMessages'
     ])
   },
-
-  updated () {
-    this.$store.commit("changeChannel", this.item);
-  },
-
   methods: {
     toggleAC () {
       this.$store.commit("toggleAC");
     }
   },
-
-  mounted () {
-    this.$store.commit("updateChannels", this.items);
-  }
 };
 </script>

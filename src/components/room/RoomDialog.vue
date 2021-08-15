@@ -12,6 +12,7 @@
       <v-card-text>
         <v-form
           ref="form"
+          @submit.prevent="handleSubmit"
           v-model="valid"
           lazy-validation
         >

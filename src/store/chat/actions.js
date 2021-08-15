@@ -40,7 +40,7 @@ export async function getRoomMessages({ commit, state }, { roomId, loadMore }) {
       },
     });
 
-    commit("UPDATE_ROOM_MESSAGES", { list: data, roomId, page: 1 });
+    commit("UPDATE_ROOM_MESSAGES", { list: data, roomId });
 
     return data;
   } catch (error) {
@@ -48,14 +48,26 @@ export async function getRoomMessages({ commit, state }, { roomId, loadMore }) {
   }
 }
 
-export async function getPvMessages({ commit, state }, { userId, page }) {
+export async function getPvMessages({ commit, state }, { userId, loadMore }) {
   if (state.pvMessages[userId]?.noMore) return;
+  if (!loadMore && state.pvMessages[userId]?.messages?.length > 0) return;
 
-  if (state.pvMessages[userId]?.page >= page) return;
+  let timestamp;
+  if (state.pvMessages[userId]?.messages[0]) {
+    timestamp = state.pvMessages[userId]?.messages[0].timestamp;
+  }
+
   try {
-    const { data } = await axios.get(`messages/pv/${userId}?page=${page}`);
+    const { data } = await axios.get(`messages/pv/${userId}`, {
+      params: {
+        timestamp,
+        limit: LIMIT,
+      },
+    });
 
-    commit("UPDATE_PV_MESSAGES", { list: data, userId, page: 1 });
+    commit("UPDATE_PV_MESSAGES", { list: data, userId });
+
+    return data;
   } catch (error) {
     console.log(error);
   }
