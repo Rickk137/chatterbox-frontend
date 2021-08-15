@@ -1,17 +1,32 @@
 <template>
-  <ul class="messages">
+  <ul
+    id="messages"
+    class="messages"
+  >
+    <infinite-loading
+      v-if="messages.length"
+      direction="top"
+      spinner="circles"
+      @infinite="($state) => $emit('loadMore', $state)"
+    ></infinite-loading>
     <li
       v-for="(message, i) in messages"
-      :key="i"
+      :key="message._id || i"
       :class="{other: userId !== message.author, self:  userId === message.author}"
     >{{message.content}}</li>
   </ul>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
+
+
 import { mapState } from 'vuex';
 
 export default {
+  components: {
+    InfiniteLoading,
+  },
   props: {
     messages: {
       type: Array,

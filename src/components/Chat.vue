@@ -2,7 +2,10 @@
   <div class="chat-content">
     <div class="messages">
       <div class="message-container">
-        <Messages :messages="messages"/>
+        <Messages
+          :messages="messages"
+          @loadMore="($state) => $emit('loadMore', $state)"
+        />
 
         <div class="chat-form">
           <v-text-field
@@ -60,8 +63,10 @@ export default {
         receiver: this.receiver,
         type: this.receiverType
       })
-
       this.msginform = '';
+      setTimeout(() => {
+        this.$emit('scrollToEnd')
+      }, 100)
     }
   }
 };

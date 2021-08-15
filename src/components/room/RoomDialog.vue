@@ -89,9 +89,10 @@ export default {
 
             const { data } = await this.axios.post("rooms", { name: this.name });
 
+            this.$socket.emit('join-room');
+
             this.ADD_ROOM(data);
             this.showSnackbar({ content: 'Room added', color: 'success' });
-
           }
           this.clear();
           this.$emit('close');

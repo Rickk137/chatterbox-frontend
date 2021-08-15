@@ -40,12 +40,16 @@ export async function signup({ dispatch, commit }, payload) {
 
 export async function fetchUser({ dispatch, commit }) {
   try {
-    const { data } = await axios.get("auth");
+    const { data } = await axios.get("auth/me");
     if (!data) {
       return dispatch("logout");
     }
-    const { email, role, name, _id } = data;
-    const user = { email, role, name, id: _id };
+    const { email, name, family, username, privateRooms, _id } = data;
+    const user = { email, name, family, username, id: _id };
+
+    commit("chat/SET_PV_ROOMS", privateRooms, {
+      root: true,
+    });
 
     commit("SET_USER", user);
   } catch (error) {

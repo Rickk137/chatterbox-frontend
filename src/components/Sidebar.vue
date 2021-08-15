@@ -14,6 +14,33 @@
           height="100%"
           class="channels"
         >
+
+          <v-list
+            width="100%"
+            dense
+          >
+            <v-subheader>Private:</v-subheader>
+            <v-list-item-group
+              v-model="item"
+              color="primary"
+            >
+              <v-list-item
+                v-for="(item, i) in pvRooms"
+                :key="i"
+                :to="`/pv/${item._id}`"
+                :class="{ notification: pvMessages[item._id] && pvMessages[item._id].notification}"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="channel-title"
+                    v-text="`${item.name} ${item.family}`"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+
+          </v-list>
+
           <v-list
             width="100%"
             dense
@@ -27,6 +54,7 @@
                 v-for="(item, i) in rooms"
                 :key="i"
                 :to="`/rooms/${item._id}`"
+                :class="{ notification: roomMessages[item._id] && roomMessages[item._id].notification}"
               >
                 <v-list-item-content>
                   <v-list-item-title
@@ -38,6 +66,7 @@
             </v-list-item-group>
 
           </v-list>
+
         </v-card>
       </v-card>
     </div>
@@ -115,6 +144,9 @@ export default {
   computed: {
     ...mapState('chat', [
       'rooms',
+      'roomMessages',
+      'pvRooms',
+      'pvMessages'
     ])
   },
 

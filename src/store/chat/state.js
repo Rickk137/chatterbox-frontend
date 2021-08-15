@@ -15,7 +15,9 @@ export default function() {
     ],
 
     roomMessages: {},
+    pvMessages: {},
 
     rooms: [],
+    pvRooms: [],
   };
 }
