@@ -1,8 +1,18 @@
 import axios from "axios";
 import { receiverTypes, LIMIT } from "@/constants/types";
+import store from "../index";
 
 export function changeChannel({ commit }, { channel }) {
   commit("SET_CURRENT_CHANNEL", channel);
+}
+
+export async function addPvRoom({ commit }, id) {
+  try {
+    const { data } = await axios.get("users/" + id);
+    commit("ADD_PV_ROOM", data);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getRooms({ commit }) {
@@ -14,11 +24,19 @@ export async function getRooms({ commit }) {
   }
 }
 
-export async function newMessage({ commit }, msg) {
+export async function newMessage({ commit, dispatch, state }, msg) {
   if (msg.type === receiverTypes.ROOM) {
     commit("ADD_ROOM_MESSAGE", msg);
   } else if (msg.type === receiverTypes.USER) {
-    commit("ADD_PV_MESSAGE", msg);
+    const currentId = store.state.auth.user?.id;
+    if (!currentId) return;
+    const roomKey = msg.author === currentId ? msg.receiver : msg.author;
+
+    commit("ADD_PV_MESSAGE", { msg, currentId, roomKey });
+
+    if (!state.pvRooms.find((room) => room._id === roomKey)) {
+      dispatch("addPvRoom", roomKey);
+    }
   }
 }
 

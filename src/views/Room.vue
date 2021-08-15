@@ -77,7 +77,7 @@ export default {
     async getRoomInfo () {
       try {
         const { data } = await this.axios.get("rooms/" + this.receiver);
-        this.members = (data.members || []).map(member => ({ ...member.userId, role: member.role }));
+        this.members = (data.members || []).map(member => ({ ...member.userId, role: member.role })).sort(a => a._id === this.user?.id ? -1 : 1);
       } catch (error) {
         console.log('err:', error)
       }
@@ -98,6 +98,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('auth', ['user']),
     ...mapState('chat', ['roomMessages']),
     roomData () {
       return this.roomMessages[this.receiver] || []

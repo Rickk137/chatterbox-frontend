@@ -1,6 +1,14 @@
 import store from "../index";
 import { LIMIT } from "../../constants/types";
 
+export function RESET(state) {
+  state.roomMessages = {};
+  state.pvMessages = {};
+
+  state.rooms = [];
+  state.pvRooms = [];
+}
+
 export function SET_CURRENT_CHANNEL(state, currentChannel) {
   state.currentChannel = currentChannel;
 }
@@ -8,6 +16,10 @@ export function SET_CURRENT_CHANNEL(state, currentChannel) {
 export function SET_PV_ROOMS(state, pvRooms) {
   state.pvRooms = pvRooms;
 }
+export function ADD_PV_ROOM(state, room) {
+  state.pvRooms = [...state.pvRooms, room];
+}
+
 export function SET_ROOMS(state, rooms) {
   state.rooms = rooms;
 }
@@ -51,24 +63,19 @@ export function UPDATE_ROOM_MESSAGES(state, { list, roomId }) {
   state.roomMessages = roomMessages;
 }
 
-export function ADD_PV_MESSAGE(state, msg) {
-  const currentId = store.state.auth.user?.id;
-  if (!currentId) return;
-
-  const key = msg.author === currentId ? msg.receiver : msg.author;
-
+export function ADD_PV_MESSAGE(state, { msg, roomKey, currentId }) {
   const pvMessages = { ...state.pvMessages };
-  pvMessages[key] = pvMessages[key] || {
+  pvMessages[roomKey] = pvMessages[roomKey] || {
     messages: [],
     page: 0,
     notification: false,
   };
 
-  const messages = pvMessages[key].messages || [];
+  const messages = pvMessages[roomKey].messages || [];
   messages.push(msg);
   // should be always target id;
-  pvMessages[key].messages = messages;
-  pvMessages[key].notification = msg.author !== currentId;
+  pvMessages[roomKey].messages = messages;
+  pvMessages[roomKey].notification = msg.author !== currentId;
 
   state.pvMessages = pvMessages;
 }

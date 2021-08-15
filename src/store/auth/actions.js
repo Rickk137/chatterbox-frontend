@@ -32,6 +32,10 @@ export async function signup({ dispatch, commit }, payload) {
 
     dispatch("storeToken", access_token);
 
+    dispatch("init", null, {
+      root: true,
+    });
+
     router.push("/").catch(() => {});
   } catch (error) {
     console.log(error);
@@ -65,6 +69,10 @@ export function storeToken({ commit }, token) {
 export async function logout({ commit }) {
   commit("SET_TOKEN", null);
   commit("SET_USER", null);
+
+  commit("chat/RESET", null, {
+    root: true,
+  });
 
   axios.defaults.headers.Authorization = "";
 
