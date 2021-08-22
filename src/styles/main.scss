@@ -1,5 +1,5 @@
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: IRANYekan, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -321,5 +321,24 @@ body {
     &:hover {
       background: #28292b;
     }
+  }
+}
+
+.v-application.v-application--is-rtl {
+  .guilds {
+    right: 0;
+    border-right: none;
+    border-left: 1px solid #363636;
+  }
+
+  .base {
+    right: 82px;
+    left: 0;
+  }
+  .channel-title {
+    text-align: right;
+  }
+  .head-tools {
+    float: left;
   }
 }

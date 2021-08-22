@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'IRANYekan';
+    src: url('./eot/iranyekanweblight.eot');
+    src: url('./eot/iranyekanweblight.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('./woff2/iranyekanweblight.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('./woff/iranyekanweblight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('./ttf/iranyekanweblight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANYekan';
+    src: url('./eot/iranyekanwebregular.eot');
+    src: url('./eot/iranyekanwebregular.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('./woff2/iranyekanwebregular.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('./woff/iranyekanwebregular.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('./ttf/iranyekanwebregular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANYekan';
+    src: url('./eot/iranyekanwebbold.eot');
+    src: url('./eot/iranyekanwebbold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('./woff2/iranyekanwebbold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('./woff/iranyekanwebbold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('./ttf/iranyekanwebbold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANYekanDigits';
+    src: url('./eot/IRANYekanMsn.eot');
+    src: url('./eot/IRANYekanMsn.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('./woff2/IRANYekanMsn.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+    url('./woff/IRANYekanMsn.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('./ttf/IRANYekanMsn.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    src: url(./iransansweb.ttf) format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}

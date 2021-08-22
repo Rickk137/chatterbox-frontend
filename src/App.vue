@@ -19,6 +19,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./assets/fonts/_iranyekan.scss";
 @import "./styles/main.scss";
 @import "./styles/style.scss";
 </style>

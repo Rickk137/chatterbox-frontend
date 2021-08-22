@@ -20,7 +20,7 @@
             dense
             v-if="currentChannel !== 'room'"
           >
-            <v-subheader>Private:</v-subheader>
+            <v-subheader>{{$t('private')}}:</v-subheader>
             <v-list-item-group
               v-model="item"
               color="primary"

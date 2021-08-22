@@ -31,18 +31,7 @@
                   />
                 </div>
               </div>
-              <div
-                class="ch"
-                v-if="$store.state.channels.length > 0"
-              >
-                <v-icon
-                  dark
-                  left
-                >{{
-                  $store.state.channels[getCh()].icon
-                }}</v-icon>
-                {{ $store.state.channels[getCh()].text }}
-              </div>
+
               <div class="head-tools">
 
                 <!-- <v-text-field
@@ -55,6 +44,14 @@
                   class="hidden-sm-and-down mx-2 head-search"
                   autocomplete="off"
                 ></v-text-field> -->
+
+                <v-btn
+                  dark
+                  icon
+                  @click="() => changeLanguage(lang === 'fa' ? 'en' : 'fa')"
+                >
+                  {{lang === 'fa' ? 'En' : 'Fa' }}
+                </v-btn>
 
                 <v-menu
                   bottom
@@ -98,6 +95,8 @@ import Toolbar from "@/components/Toolbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import AvatarChanger from "@/components/AvatarChanger";
 import { mapActions, mapState } from 'vuex';
+import i18n from "@/translation/i18n";
+import { getLanguage } from "@/translation/i18n";
 
 export default {
   name: "MainLayout",
@@ -113,6 +112,7 @@ export default {
       mini: true,
       leftDrawer: false,
       canMessageSubmit: false,
+      lang: getLanguage()
     };
   },
 
@@ -125,11 +125,11 @@ export default {
       'logout',
     ]),
 
-    getCh () {
-      return (this.cache =
-        this.$store.state.currentChannel === undefined
-          ? this.cache
-          : this.$store.state.currentChannel);
+    changeLanguage (locale) {
+      this.$vuetify.rtl = locale === 'fa';
+      i18n.locale = locale;
+      localStorage.setItem('lang', locale);
+      this.lang = locale;
     },
   },
 };
