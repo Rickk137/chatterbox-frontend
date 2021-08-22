@@ -1,9 +1,13 @@
 #app {
-  font-family: IRANYekan, Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.v-application * {
+  font-family: $font-family !important;
 }
 
 #nav {

@@ -6,8 +6,14 @@
       class="teal primary"
     >
       <v-card-text class="white--text mt-12">
-        <h1 class="text-center display-1">Welcome Back!</h1>
-        <h5 class="text-center">To Keep connected with us please login with your personnel info</h5>
+        <h1
+          class="text-center display-1"
+          v-t="'welcome'"
+        ></h1>
+        <h5
+          class="text-center"
+          v-t="'signInText'"
+        ></h5>
       </v-card-text>
       <div class="text-center">
         <v-btn
@@ -15,7 +21,8 @@
           outlined
           dark
           @click="$emit('login')"
-        >Sign in</v-btn>
+          v-t="'signIn'"
+        />
       </div>
     </v-col>
 
@@ -25,12 +32,15 @@
       class="mb-10"
     >
       <v-card-text class="mt-12">
-        <h1 class="text-center display-2 teal--text text--primary">Create Account</h1>
+        <h1
+          class="text-center teal--text text--primary mb-4"
+          v-t="'createAccount'"
+        ></h1>
 
         <v-form>
           <v-text-field
             v-model="name"
-            label="Name"
+            :label="$t('name')"
             name="Name"
             prepend-icon="mdi-account"
             type="text"
@@ -38,7 +48,7 @@
           />
           <v-text-field
             v-model="family"
-            label="Family"
+            :label="$t('family')"
             name="Family"
             prepend-icon="mdi-account"
             type="text"
@@ -46,7 +56,7 @@
           />
           <v-text-field
             v-model="username"
-            label="Username"
+            :label="$t('username')"
             name="Username"
             prepend-icon="mdi-account"
             type="text"
@@ -54,7 +64,7 @@
           />
           <v-text-field
             v-model="email"
-            label="Email"
+            :label="$t('email')"
             name="Email"
             prepend-icon="mdi-email"
             type="text"
@@ -64,7 +74,7 @@
           <v-text-field
             v-model="password"
             id="password"
-            label="Password"
+            :label="$t('password')"
             name="password"
             prepend-icon="mdi-lock"
             type="password"
@@ -78,7 +88,8 @@
           color="teal primary"
           dark
           @click="handleSignup"
-        >SIGN UP</v-btn>
+          v-t="'signUp'"
+        />
       </div>
     </v-col>
   </v-row>

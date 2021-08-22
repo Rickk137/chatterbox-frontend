@@ -1,5 +1,8 @@
 <template>
-  <v-app id="inspire">
+  <v-app
+    id="inspire"
+    style="background: #1e1e1e !important;"
+  >
     <v-content>
       <v-container
         class="fill-height"

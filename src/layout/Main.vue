@@ -69,9 +69,11 @@
                   </template>
 
                   <v-list>
-                    <v-list-item @click="logout">
-                      Logout
-                    </v-list-item>
+                    <v-list-item
+                      @click="logout"
+                      v-t="'logout'"
+                    />
+
                   </v-list>
                 </v-menu>
               </div>

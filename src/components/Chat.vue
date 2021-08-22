@@ -10,7 +10,7 @@
         <div class="chat-form">
           <v-text-field
             class="mx-5 my-3 chat-form-tf"
-            label="Send message..."
+            :label="`${$t('sendMessage')}...`"
             solo
             flat
             v-model="msginform"

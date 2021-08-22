@@ -47,7 +47,7 @@
             dense
             v-if="currentChannel !== 'pv'"
           >
-            <v-subheader>Rooms:</v-subheader>
+            <v-subheader>{{$t('rooms')}}:</v-subheader>
             <v-list-item-group
               v-model="item"
               color="primary"
@@ -89,7 +89,7 @@
           <v-list-item-content>
             <v-list-item-title
               class="channel-title"
-              v-text="'Create Room '"
+              v-text="$t('createRoom')"
             ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -113,7 +113,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>{{ $store.state.myNick }}</v-list-item-title>
+          <v-list-item-title v-if="user">{{ `${user.name} ${user.family}`}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -151,7 +151,8 @@ export default {
       'pvRooms',
       'pvMessages',
       'currentChannel'
-    ])
+    ]),
+    ...mapState('auth', ['user'])
   },
   methods: {
     toggleAC () {

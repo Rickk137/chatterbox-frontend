@@ -7,7 +7,7 @@
 
     <v-card>
       <v-card-title class="text-h4 text-center mb-2">
-        Create Room
+        {{$t('createRoom')}}
       </v-card-title>
       <v-card-text>
         <v-form
@@ -21,7 +21,7 @@
             v-model="name"
             :counter="20"
             :rules="nameRules"
-            label="Room Name"
+            :label="$t('roomName')"
             required
             prepend-icon="mdi-book-multiple-outline"
           ></v-text-field>
@@ -34,17 +34,16 @@
           color="blue darken-1"
           text
           @click="$emit('close')"
-        >
-          Close
-        </v-btn>
+          v-t="'close'"
+        />
         <v-btn
           color="blue darken-1"
           text
           :disabled="!valid"
           @click="handleSubmit"
-        >
-          Save
-        </v-btn>
+          v-t="'save'"
+        />
+
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -69,8 +68,8 @@ export default {
       valid: true,
       name: '',
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 20) || 'Name must be less than 20 characters',
+        v => !!v || this.$t('rules.required'),
+        v => (v && v.length <= 20) || this.$t('rules.maxCharacters', { count: 20 }),
       ],
     }
   },
@@ -85,7 +84,7 @@ export default {
       if (this.$refs.form.validate()) {
         try {
           if (this.updateForm) {
-            console.log('salam')
+            console.log('Test')
           } else {
 
             const { data } = await this.axios.post("rooms", { name: this.name });

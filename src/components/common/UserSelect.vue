@@ -2,7 +2,7 @@
   <v-select
     v-model="user"
     :items="list"
-    label="User"
+    :label="$t('user')"
     outlined
     dark
     return-object
