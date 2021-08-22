@@ -23,10 +23,14 @@ export default new Vuex.Store({
     loggedIn: false,
 
     snackbar: null,
+    callingDialog: null,
   },
   mutations: {
     showSnackbar(store, snackbar) {
       store.snackbar = snackbar;
+    },
+    setCallingDialog(store, userId) {
+      store.callingDialog = userId;
     },
     updateChannels(store, list) {
       store.channels = list;

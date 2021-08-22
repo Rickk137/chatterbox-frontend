@@ -120,10 +120,12 @@
       </div>
     </div>
     <AvatarChanger></AvatarChanger>
+    <CallingDialog />
   </v-content>
 </template>
 
 <script>
+import CallingDialog from "@/components/CallingDialog.vue";
 import Channels from "@/components/Channels.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import AvatarChanger from "@/components/AvatarChanger";
@@ -135,7 +137,8 @@ export default {
   components: {
     Channels,
     Sidebar,
-    AvatarChanger
+    AvatarChanger,
+    CallingDialog
   },
   data () {
     return {

@@ -7,6 +7,8 @@ import MainLayout from "../layout/Main.vue";
 import Room from "../views/Room.vue";
 import Pv from "../views/Pv.vue";
 import Login from "../views/Login.vue";
+import Call from "../views/Call/index.vue";
+import AcceptCall from "../views/Call/accept.vue";
 
 Vue.use(VueRouter);
 
@@ -29,6 +31,17 @@ const routes = [
         path: "/pv/:userId",
         name: "Private",
         component: Pv,
+      },
+
+      {
+        path: "/call/:userId",
+        name: "Call",
+        component: Call,
+      },
+      {
+        path: "/call/:userId/accept",
+        name: "AcceptCall",
+        component: AcceptCall,
       },
     ],
   },
