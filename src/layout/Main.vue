@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <div class="dc-container">
-      <Channels />
+      <Toolbar />
 
       <div class="base">
         <div class="base-content">
@@ -44,36 +44,6 @@
                 {{ $store.state.channels[getCh()].text }}
               </div>
               <div class="head-tools">
-                <div class="tool-icons-container">
-                  <div class="hidden-sm-and-down">
-                    <div class="tool-icon">
-                      <v-btn icon>
-                        <v-icon color="white">mdi-bell</v-icon>
-                      </v-btn>
-                    </div>
-                    <div class="tool-icon">
-                      <v-btn icon>
-                        <v-icon color="white">mdi-cloud</v-icon>
-                      </v-btn>
-                    </div>
-                    <div class="tool-icon">
-                      <v-btn icon>
-                        <v-icon color="white">mdi-account-supervisor-circle</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
-                  <div class="hidden-md-and-up">
-                    <div class="tool-icon mr-n4">
-                      <v-btn icon>
-                        <v-icon
-                          color="white"
-                          @click="drawer = !drawer"
-                        >mdi-account-group</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
-
-                </div>
 
                 <!-- <v-text-field
                   dark
@@ -124,7 +94,7 @@
 </template>
 
 <script>
-import Channels from "@/components/Channels.vue";
+import Toolbar from "@/components/Toolbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import AvatarChanger from "@/components/AvatarChanger";
 import { mapActions, mapState } from 'vuex';
@@ -133,7 +103,7 @@ export default {
   name: "MainLayout",
 
   components: {
-    Channels,
+    Toolbar,
     Sidebar,
     AvatarChanger
   },

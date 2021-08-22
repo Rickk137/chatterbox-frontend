@@ -18,6 +18,7 @@
           <v-list
             width="100%"
             dense
+            v-if="currentChannel !== 'room'"
           >
             <v-subheader>Private:</v-subheader>
             <v-list-item-group
@@ -44,6 +45,7 @@
           <v-list
             width="100%"
             dense
+            v-if="currentChannel !== 'pv'"
           >
             <v-subheader>Rooms:</v-subheader>
             <v-list-item-group
@@ -74,6 +76,7 @@
       class="mystats"
       tile
       dark
+      v-if="currentChannel !== 'pv'"
     >
       <v-list
         width="100%"
@@ -146,7 +149,8 @@ export default {
       'rooms',
       'roomMessages',
       'pvRooms',
-      'pvMessages'
+      'pvMessages',
+      'currentChannel'
     ])
   },
   methods: {

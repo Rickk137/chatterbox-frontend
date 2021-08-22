@@ -8,40 +8,38 @@
       height="100%"
     >
       <v-avatar
-        :class="['round-icon', {'active': currentChannel === 'Home'}]"
-        @click="() => clickIcon('Home')"
+        :class="['round-icon', {'active': currentChannel === 'all'}]"
+        @click="() => clickIcon('all')"
       >
         <v-icon size="30">mdi-home</v-icon>
       </v-avatar>
       <br />
-      <hr />
       <v-avatar
-        v-for="channel in channels"
-        :key="channel.id"
-        :class="['round-icon', {'active': currentChannel === channel.id}]"
-        @click="() => clickIcon(channel.id)"
+        :class="['round-icon', {'active': 'pv' === currentChannel}]"
+        @click="() => clickIcon('pv')"
       >
-        <v-icon size="30">{{channel.icon}}</v-icon>
+        <v-icon size="30">mdi-account</v-icon>
+      </v-avatar>
+      <v-avatar
+        :class="['round-icon', {'active': 'room' === currentChannel}]"
+        @click="() => clickIcon('room')"
+      >
+        <v-icon size="30">mdi-account-group </v-icon>
       </v-avatar>
 
-      <v-avatar class="round-tools-icon">
+      <!-- <v-avatar class="round-tools-icon">
         <v-icon
           size="30"
           class="icon"
         >mdi-plus</v-icon>
-      </v-avatar>
+      </v-avatar> -->
       <v-avatar class="round-tools-icon">
         <v-icon
           size="30"
           class="icon"
         >mdi-magnify</v-icon>
       </v-avatar>
-      <v-avatar class="round-tools-icon">
-        <v-icon
-          size="30"
-          class="icon"
-        >mdi-download</v-icon>
-      </v-avatar>
+     
     </v-card>
   </nav>
 </template>
@@ -50,12 +48,12 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
+  name: 'Toolbar',
   computed: {
-    ...mapState('chat', ['currentChannel', 'channels'])
+    ...mapState('chat', ['currentChannel'])
   },
   methods: {
     clickIcon (channel) {
-      console.log(this.$socket)
       this.changeChannel({ channel });
     },
     ...mapActions('chat', [
