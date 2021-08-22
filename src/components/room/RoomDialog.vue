@@ -92,7 +92,7 @@ export default {
             this.$socket.emit('join-room');
 
             this.ADD_ROOM(data);
-            this.showSnackbar({ content: 'Room added', color: 'success' });
+            this.showSnackbar({ content: this.$t('roomAdded'), color: 'success' });
           }
           this.clear();
           this.$emit('close');

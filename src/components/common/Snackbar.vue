@@ -3,9 +3,9 @@
     v-model="show"
     :color="color"
     multi-line
+    timeout="2000"
   >
     {{ message }}
-
     <template v-slot:action="{ attrs }">
       <v-btn
         icon

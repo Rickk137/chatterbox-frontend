@@ -28,4 +28,5 @@ export default {
     required: "Field is required.",
     maxCharacters: "Field must be less than {count} characters.",
   },
+  roomAdded: "Room Added",
 };

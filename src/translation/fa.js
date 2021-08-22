@@ -28,4 +28,5 @@ export default {
     required: "فیلد الزامیست.",
     maxCharacters: "فیلد حداکثر  {count} کارکتر می باشد.",
   },
+  roomAdded: "اتاق ساخته شد.",
 };
