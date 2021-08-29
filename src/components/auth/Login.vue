@@ -1,5 +1,7 @@
 <template>
   <v-row style="min-height: 552px;">
+    <LanguageSwitch class="lang-switcher" />
+
     <v-col
       class="fill-height"
       cols="12"
@@ -33,10 +35,10 @@
             color="teal primary"
           />
         </v-form>
-        <h3
+        <!-- <h3
           class="text-center mt-4"
           v-t="'forgotPassword'"
-        ></h3>
+        ></h3> -->
       </v-card-text>
       <div class="text-center mt-3">
         <v-btn
@@ -77,9 +79,13 @@
 </template>
 
 <script>
+import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import { mapActions } from 'vuex';
 
 export default {
+  components: {
+    LanguageSwitch,
+  },
   data () {
     return {
       email: 'peymannaderi3@gmail.com',
@@ -98,4 +104,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lang-switcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+.v-application--is-rtl .lang-switcher {
+  left: 0;
+  right: unset;
+}
 </style>

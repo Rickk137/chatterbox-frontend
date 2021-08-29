@@ -45,13 +45,7 @@
                   autocomplete="off"
                 ></v-text-field> -->
 
-                <v-btn
-                  dark
-                  icon
-                  @click="() => changeLanguage(lang === 'fa' ? 'en' : 'fa')"
-                >
-                  {{lang === 'fa' ? 'En' : 'Fa' }}
-                </v-btn>
+                <LanguageSwitch />
 
                 <v-menu
                   bottom
@@ -88,17 +82,14 @@
         </div>
       </div>
     </div>
-    <AvatarChanger></AvatarChanger>
   </v-content>
 </template>
 
 <script>
+import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import Toolbar from "@/components/Toolbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import AvatarChanger from "@/components/AvatarChanger";
 import { mapActions, mapState } from 'vuex';
-import i18n from "@/translation/i18n";
-import { getLanguage } from "@/translation/i18n";
 
 export default {
   name: "MainLayout",
@@ -106,7 +97,7 @@ export default {
   components: {
     Toolbar,
     Sidebar,
-    AvatarChanger
+    LanguageSwitch
   },
   data () {
     return {
@@ -114,7 +105,6 @@ export default {
       mini: true,
       leftDrawer: false,
       canMessageSubmit: false,
-      lang: getLanguage()
     };
   },
 
@@ -127,12 +117,6 @@ export default {
       'logout',
     ]),
 
-    changeLanguage (locale) {
-      this.$vuetify.rtl = locale === 'fa';
-      i18n.locale = locale;
-      localStorage.setItem('lang', locale);
-      this.lang = locale;
-    },
   },
 };
 </script>

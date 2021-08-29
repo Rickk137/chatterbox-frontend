@@ -1,5 +1,7 @@
 <template>
   <v-row class="fill-height">
+    <LanguageSwitch class="lang-switcher" />
+
     <v-col
       cols="12"
       md="5"
@@ -96,9 +98,13 @@
 </template>
 
 <script>
+import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import { mapActions } from 'vuex';
 
 export default {
+  components: {
+    LanguageSwitch,
+  },
   data () {
     return {
       email: 'peymannaderi3@gmail.com',
@@ -127,4 +133,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.lang-switcher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.v-application--is-rtl .lang-switcher {
+  right: 0;
+  left: unset;
+}
 </style>
