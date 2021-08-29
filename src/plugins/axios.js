@@ -1,6 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import { getLanguage } from "@/translation/i18n";
 
 import store from "../store";
 
@@ -12,7 +13,7 @@ export const getHeader = () => {
 Vue.use(VueAxios, axios);
 Vue.axios.defaults.baseURL = "http://localhost:3333/";
 Vue.axios.defaults.headers.Authorization = getHeader();
-
+Vue.axios.defaults.headers["x-custom-lang"] = getLanguage();
 
 Vue.axios.interceptors.response.use(
   function(response) {

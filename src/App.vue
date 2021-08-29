@@ -8,7 +8,6 @@
 <script>
 import Snackbar from '@/components/common/Snackbar';
 
-console.say = function () { }
 export default {
   name: 'App',
   components: {
