@@ -19,6 +19,18 @@
             @keypress="setCanMessageSubmit"
           >
           </v-text-field>
+          <div class="submit-btn mx-8">
+
+            <v-btn
+              :disabled="!this.msginform"
+              @click="sendChat"
+              dark
+              icon
+            >
+              <v-icon v-text="'mdi-send'"></v-icon>
+            </v-btn>
+          </div>
+
         </div>
       </div>
     </div>
@@ -58,6 +70,8 @@ export default {
       this.canMessageSubmit = true;
     },
     sendChat () {
+      if (!this.msginform) return;
+
       this.$socket.emit('message', {
         content: this.msginform,
         receiver: this.receiver,

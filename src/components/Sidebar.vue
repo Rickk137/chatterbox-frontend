@@ -102,9 +102,11 @@
       tile
       flat
       class="mystats"
-      @click="toggleAC"
     >
-      <v-list-item class="grow">
+      <v-list-item
+        :to="`/pv/${user.id}`"
+        class="grow"
+      >
         <v-list-item-avatar color="grey darken-3">
           <v-img
             class="elevation-6"
@@ -153,11 +155,6 @@ export default {
       'currentChannel'
     ]),
     ...mapState('auth', ['user'])
-  },
-  methods: {
-    toggleAC () {
-      this.$store.commit("toggleAC");
-    }
   },
 };
 </script>

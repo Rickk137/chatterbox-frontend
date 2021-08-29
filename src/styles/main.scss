@@ -308,6 +308,16 @@ body {
     width: 100%;
     align-items: stretch;
     background: #1e1e1e !important;
+    position: relative;
+    .submit-btn {
+      position: absolute;
+      right: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 6px;
+    }
 
     input {
       color: white !important;
@@ -349,6 +359,10 @@ body {
   }
   .head-tools {
     float: left;
+  }
+  .chat-form .submit-btn {
+    left: 0;
+    right: initial;
   }
 }
 
