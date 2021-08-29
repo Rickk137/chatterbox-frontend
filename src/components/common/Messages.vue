@@ -6,11 +6,14 @@
     <infinite-loading
       v-if="messages.length"
       direction="top"
-      no-more="no-more2"
-      no-result="no-result2"
       spinner="circles"
       @infinite="($state) => $emit('loadMore', $state)"
-    ></infinite-loading>
+    >
+
+      <div slot="no-more"></div>
+      <div slot="no-results"></div>
+
+    </infinite-loading>
     <li
       v-for="(message, i) in messages"
       :key="message._id || i"
@@ -21,8 +24,6 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
-
-
 import { mapState } from 'vuex';
 
 export default {
