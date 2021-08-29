@@ -26,7 +26,7 @@
               color="primary"
             >
               <v-list-item
-                v-for="(item, i) in pvRooms"
+                v-for="(item, i) in filteredPv"
                 :key="i"
                 :to="`/pv/${item._id}`"
                 :class="{ notification: pvMessages[item._id] && pvMessages[item._id].notification}"
@@ -154,7 +154,10 @@ export default {
       'pvMessages',
       'currentChannel'
     ]),
-    ...mapState('auth', ['user'])
+    ...mapState('auth', ['user']),
+    filteredPv () {
+      return !this.user ? this.pvRooms : this.pvRooms.filter(item => item._id !== this.user.id)
+    }
   },
 };
 </script>
