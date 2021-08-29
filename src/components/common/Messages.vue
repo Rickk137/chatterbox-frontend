@@ -6,6 +6,8 @@
     <infinite-loading
       v-if="messages.length"
       direction="top"
+      no-more="no-more2"
+      no-result="no-result2"
       spinner="circles"
       @infinite="($state) => $emit('loadMore', $state)"
     ></infinite-loading>

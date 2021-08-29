@@ -7,6 +7,7 @@ import MainLayout from "../layout/Main.vue";
 import Room from "../views/Room.vue";
 import Pv from "../views/Pv.vue";
 import Login from "../views/Login.vue";
+import Welcome from "../views/Welcome.vue";
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,7 @@ const routes = [
       {
         path: "",
         name: "Home",
+        component: Welcome,
       },
       {
         path: "/rooms/:roomId",

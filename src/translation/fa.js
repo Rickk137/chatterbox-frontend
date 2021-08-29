@@ -20,6 +20,7 @@ export default {
   signIn: "ورود",
   email: "ایمیل",
   welcome: "خوش آمدید",
+  welcomeText: "برای شروع یک اتاق بسازید.",
   signInText: "برای استفاده از پنل وارد شوید.",
   signUpText: "با استفاده از اطلاعات خود ثبت نام کنید.",
   password: "پسورد",
@@ -29,4 +30,6 @@ export default {
     maxCharacters: "فیلد حداکثر  {count} کارکتر می باشد.",
   },
   roomAdded: "اتاق ساخته شد.",
+  startChat: "شروع گفت و گو",
+  findUser: "جست و جو کاربران",
 };

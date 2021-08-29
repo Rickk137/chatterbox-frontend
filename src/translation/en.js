@@ -20,6 +20,7 @@ export default {
   signIn: "Sign In",
   email: "Email",
   welcome: "Welcome",
+  welcomeText: "To start create a room",
   signInText: "To Keep connected with us please login with your personnel info",
   signUpText: "Enter your personal details and signup",
   password: "Password",
@@ -29,4 +30,6 @@ export default {
     maxCharacters: "Field must be less than {count} characters.",
   },
   roomAdded: "Room Added",
+  startChat: "Start Chat",
+  findUser: "Find user",
 };

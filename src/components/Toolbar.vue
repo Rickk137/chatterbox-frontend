@@ -33,26 +33,80 @@
           class="icon"
         >mdi-plus</v-icon>
       </v-avatar> -->
-      <v-avatar class="round-tools-icon">
+      <v-avatar
+        @click="() => findUserDialog = true"
+        class="round-tools-icon"
+      >
         <v-icon
           size="30"
           class="icon"
         >mdi-magnify</v-icon>
       </v-avatar>
-     
+
+      <v-dialog
+        v-model="findUserDialog"
+        max-width="400px"
+        dark
+      >
+        <v-card>
+          <v-card-title>
+            <span
+              v-t="'findUser'"
+              class="text-h5"
+            />
+          </v-card-title>
+
+          <v-card-text>
+            <UserSelect
+              v-model="chatUser"
+              :exclude="excludeList"
+            />
+            <v-btn
+              depressed
+              dark
+              large
+              :disabled="!chatUser"
+              @click="startChat"
+              v-t="'startChat'"
+            />
+
+          </v-card-text>
+
+        </v-card>
+      </v-dialog>
+
     </v-card>
   </nav>
 </template>
 
 <script>
+import UserSelect from './common/UserSelect.vue';
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Toolbar',
+  data () {
+    return {
+      chatUser: null,
+      findUserDialog: false
+    }
+  },
+  components: {
+    UserSelect,
+  },
   computed: {
-    ...mapState('chat', ['currentChannel'])
+    ...mapState('chat', ['currentChannel']),
+    ...mapState('auth', ['user']),
+    excludeList () {
+      return this.user ? [this.user.id] : []
+    }
   },
   methods: {
+    startChat () {
+      this.$router.push('/pv/' + this.chatUser._id);
+      this.chatUser = null;
+      this.findUserDialog = false;
+    },
     clickIcon (channel) {
       this.changeChannel({ channel });
     },

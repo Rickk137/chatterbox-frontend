@@ -44,6 +44,7 @@
     <v-list
       width="100%"
       dense
+      v-if="canAddMember"
     >
       <v-list-item @click="showAddMember = true">
         <v-list-item-icon>
@@ -94,6 +95,7 @@
 
 <script>
 import UserSelect from './common/UserSelect.vue';
+import { memberRole } from "@/constants/types";
 
 export default {
   props: {
@@ -102,6 +104,10 @@ export default {
       default: () => ([])
     },
     roomId: {
+      type: String,
+      default: ''
+    },
+    userId: {
       type: String,
       default: ''
     },
@@ -116,9 +122,16 @@ export default {
   components: {
     UserSelect,
   },
+  computed: {
+    canAddMember () {
+      const me = (this.members || []).find(item => item._id === this.userId);
+      return me && me.role < memberRole.USER;
+    }
+  },
   methods: {
     async addUser () {
       if (!this.newUser || !this.roomId) return;
+
       try {
         await this.axios.post(`/rooms/${this.roomId}/member`,
           {
