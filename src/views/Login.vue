@@ -47,7 +47,7 @@ export default {
   },
   components: {
     Login,
-    Signup
+    Signup,
   },
 
 };

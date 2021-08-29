@@ -7,6 +7,7 @@ import chatModule from "./chat/index";
 
 import i18n, { getLanguage } from "@/translation/i18n";
 import vuetify from "@/plugins/vuetify";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -109,6 +110,7 @@ export default new Vuex.Store({
       i18n.locale = locale;
       localStorage.setItem("lang", locale);
       commit("setLocale", locale);
+      axios.defaults.headers["x-custom-lang"] = locale;
     },
   },
   modules: {

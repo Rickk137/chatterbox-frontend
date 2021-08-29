@@ -1,3 +1,5 @@
+@import "./_variables";
+
 #app {
   font-family: $font-family;
   -webkit-font-smoothing: antialiased;
@@ -6,8 +8,10 @@
   color: #2c3e50;
 }
 
+.v-application .display-1,
 .v-application * {
   font-family: $font-family !important;
+  letter-spacing: 0 !important;
 }
 
 #nav {
@@ -345,4 +349,8 @@ body {
   .head-tools {
     float: left;
   }
+}
+
+.v-btn {
+  letter-spacing: 0;
 }
