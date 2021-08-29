@@ -4,7 +4,7 @@ import SocketIO from "../socket.io";
 const options = {
   transports: ["websocket"],
 };
-const url = "http://localhost:3333";
+const url = "https://chatterbox666.herokuapp.com/";
 
 Vue.use(
   new SocketIO({

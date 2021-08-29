@@ -11,7 +11,7 @@ export const getHeader = () => {
 };
 
 Vue.use(VueAxios, axios);
-Vue.axios.defaults.baseURL = "http://localhost:3333/";
+Vue.axios.defaults.baseURL = "https://chatterbox666.herokuapp.com/";
 Vue.axios.defaults.headers.Authorization = getHeader();
 Vue.axios.defaults.headers["x-custom-lang"] = getLanguage();
 
