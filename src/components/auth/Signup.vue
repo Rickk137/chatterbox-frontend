@@ -39,13 +39,20 @@
           v-t="'createAccount'"
         ></h1>
 
-        <v-form>
+        <v-form
+          ref="signup"
+          @submit.prevent="handleSignup"
+          v-model="valid"
+          lazy-validation
+        >
           <v-text-field
             v-model="name"
             :label="$t('name')"
             name="Name"
             prepend-icon="mdi-account"
             type="text"
+            required
+            :rules="required"
             color="teal primary"
           />
           <v-text-field
@@ -54,6 +61,8 @@
             name="Family"
             prepend-icon="mdi-account"
             type="text"
+            required
+            :rules="required"
             color="teal primary"
           />
           <v-text-field
@@ -62,6 +71,8 @@
             name="Username"
             prepend-icon="mdi-account"
             type="text"
+            required
+            :rules="required"
             color="teal primary"
           />
           <v-text-field
@@ -70,9 +81,10 @@
             name="Email"
             prepend-icon="mdi-email"
             type="text"
+            required
+            :rules="emailRules"
             color="teal primary"
           />
-
           <v-text-field
             v-model="password"
             id="password"
@@ -80,6 +92,8 @@
             name="password"
             prepend-icon="mdi-lock"
             type="password"
+            required
+            :rules="passwordRules"
             color="teal primary"
           />
         </v-form>
@@ -90,7 +104,7 @@
           color="teal primary"
           dark
           @click="handleSignup"
-          v-t="'signUp'"
+          v-t="'signup'"
         />
       </div>
     </v-col>
@@ -107,11 +121,23 @@ export default {
   },
   data () {
     return {
-      email: 'peymannaderi3@gmail.com',
-      username: 'username',
-      name: 'name',
-      family: 'family',
-      password: '123456'
+      email: '',
+      username: '',
+      name: '',
+      family: '',
+      password: '',
+      valid: null,
+      required: [
+        v => !!v || this.$t('rules.required'),
+      ],
+      emailRules: [
+        v => !!v || this.$t('rules.required'),
+        v => /.+@.+\..+/.test(v) || this.$t('rules.notValid'),
+      ],
+      passwordRules: [
+        v => !!v || this.$t('rules.required'),
+        v => (v && v.length >= 6) || this.$t('rules.minCharacters', { count: 6 }),
+      ],
     }
   },
   methods: {
@@ -119,14 +145,16 @@ export default {
       'signup',
     ]),
     handleSignup () {
-      const payload = {
-        email: this.email,
-        username: this.username,
-        name: this.name,
-        family: this.family,
-        password: this.password
+      if (this.$refs.signup.validate()) {
+        const payload = {
+          email: this.email,
+          username: this.username,
+          name: this.name,
+          family: this.family,
+          password: this.password
+        }
+        this.signup(payload);
       }
-      this.signup(payload);
     }
   },
 }

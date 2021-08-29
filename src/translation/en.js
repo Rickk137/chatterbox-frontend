@@ -28,6 +28,8 @@ export default {
   rules: {
     required: "Field is required.",
     maxCharacters: "Field must be less than {count} characters.",
+    minCharacters: "Field must be more than {count} characters.",
+    notValid: "Field is not valid.",
   },
   roomAdded: "Room Added",
   startChat: "Start Chat",

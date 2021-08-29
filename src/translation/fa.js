@@ -28,6 +28,8 @@ export default {
   rules: {
     required: "فیلد الزامیست.",
     maxCharacters: "فیلد حداکثر  {count} کارکتر می باشد.",
+    minCharacters: "فیلد حداقل  {count} کارکتر می باشد.",
+    notValid: "فیلد صحیح نیست.",
   },
   roomAdded: "اتاق ساخته شد.",
   startChat: "شروع گفت و گو",

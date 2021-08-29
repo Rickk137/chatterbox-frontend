@@ -15,23 +15,33 @@
           v-t="'signIn'"
         ></h1>
 
-        <v-form>
+        <v-form
+          ref="form"
+          @submit.prevent="handleLogin"
+          v-model="valid"
+          lazy-validation
+        >
+
           <v-text-field
             v-model="email"
             :label="$t('email')"
+            :rules="emailRules"
             name="Email"
             prepend-icon="mdi-email"
             type="text"
+            required
             color="teal primary"
           />
 
           <v-text-field
             v-model="password"
             id="password"
+            :rules="passwordRules"
             :label="$t('Password')"
             name="password"
             prepend-icon="mdi-lock"
             type="password"
+            required
             color="teal primary"
           />
         </v-form>
@@ -88,8 +98,17 @@ export default {
   },
   data () {
     return {
-      email: 'peymannaderi3@gmail.com',
-      password: '123456'
+      valid: false,
+      email: '',
+      password: '',
+      emailRules: [
+        v => !!v || this.$t('rules.required'),
+        v => /.+@.+\..+/.test(v) || this.$t('rules.notValid'),
+      ],
+      passwordRules: [
+        v => !!v || this.$t('rules.required'),
+        v => (v && v.length >= 6) || this.$t('rules.minCharacters', { count: 6 }),
+      ],
     }
   },
   methods: {
@@ -97,7 +116,9 @@ export default {
       'login',
     ]),
     handleLogin () {
-      this.login({ email: this.email, password: this.password });
+      if (this.$refs.form.validate()) {
+        this.login({ email: this.email, password: this.password });
+      }
     }
   },
 }
