@@ -34,4 +34,5 @@ export default {
   roomAdded: "Room Added",
   startChat: "Start Chat",
   findUser: "Find user",
+  send: "Send",
 };

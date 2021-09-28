@@ -34,4 +34,5 @@ export default {
   roomAdded: "اتاق ساخته شد.",
   startChat: "شروع گفت و گو",
   findUser: "جست و جو کاربران",
+  send: "ارسال"
 };

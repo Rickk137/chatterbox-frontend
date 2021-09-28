@@ -19,6 +19,7 @@
         @click="() => clickIcon('pv')"
       >
         <v-icon size="30">mdi-account</v-icon>
+
       </v-avatar>
       <v-avatar
         :class="['round-icon', {'active': 'room' === currentChannel}]"

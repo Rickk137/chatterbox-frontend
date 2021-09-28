@@ -18,13 +18,36 @@
       v-for="(message, i) in messages"
       :key="message._id || i"
       :class="{other: userId !== message.author, self:  userId === message.author}"
-    >{{message.content}}</li>
+    >
+      <div v-if="!['IMAGE', 'FILE'].includes(message.contentType)">
+        {{message.content}}
+      </div>
+
+      <div v-if="message.contentType === 'IMAGE'">
+        <img
+          :src="getMediaLink(message)"
+          style="max-width: 100%; max-width: 400px;"
+        />
+      </div>
+
+      <div v-if="message.contentType === 'FILE'">
+
+        <a
+          target="_blank"
+          :href="getMediaLink(message)"
+        >
+          {{getMediaLink(message)}}
+        </a>
+      </div>
+
+    </li>
   </ul>
 </template>
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
 import { mapState } from 'vuex';
+import { baseURL } from "@/config";
 
 export default {
   components: {
@@ -42,6 +65,11 @@ export default {
     ]),
     userId () {
       return this.user?.id
+    }
+  },
+  methods: {
+    getMediaLink (message) {
+      return `${baseURL}media/${message.content}`
     }
   },
 }

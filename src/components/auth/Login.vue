@@ -10,6 +10,8 @@
       justify="center"
     >
       <v-card-text class="mt-12">
+        <Uploader />
+
         <h1
           class="text-center teal--text text--primary mb-5"
           v-t="'signIn'"
@@ -89,12 +91,14 @@
 </template>
 
 <script>
+import Uploader from "@/components/Uploader.vue";
 import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import { mapActions } from 'vuex';
 
 export default {
   components: {
     LanguageSwitch,
+    Uploader
   },
   data () {
     return {
