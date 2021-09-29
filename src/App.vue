@@ -8,7 +8,6 @@
 <script>
 import Snackbar from '@/components/common/Snackbar';
 
-console.say = function () { }
 export default {
   name: 'App',
   components: {
@@ -19,6 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./assets/fonts/_iranyekan.scss";
 @import "./styles/main.scss";
 @import "./styles/style.scss";
 </style>

@@ -18,14 +18,15 @@
           <v-list
             width="100%"
             dense
+            v-if="currentChannel !== 'room'"
           >
-            <v-subheader>Private:</v-subheader>
+            <v-subheader>{{$t('private')}}:</v-subheader>
             <v-list-item-group
               v-model="item"
               color="primary"
             >
               <v-list-item
-                v-for="(item, i) in pvRooms"
+                v-for="(item, i) in filteredPv"
                 :key="i"
                 :to="`/pv/${item._id}`"
                 :class="{ notification: pvMessages[item._id] && pvMessages[item._id].notification}"
@@ -44,8 +45,9 @@
           <v-list
             width="100%"
             dense
+            v-if="currentChannel !== 'pv'"
           >
-            <v-subheader>Rooms:</v-subheader>
+            <v-subheader>{{$t('rooms')}}:</v-subheader>
             <v-list-item-group
               v-model="item"
               color="primary"
@@ -74,6 +76,7 @@
       class="mystats"
       tile
       dark
+      v-if="currentChannel !== 'pv'"
     >
       <v-list
         width="100%"
@@ -86,7 +89,7 @@
           <v-list-item-content>
             <v-list-item-title
               class="channel-title"
-              v-text="'Create Room '"
+              v-text="$t('createRoom')"
             ></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -99,9 +102,11 @@
       tile
       flat
       class="mystats"
-      @click="toggleAC"
     >
-      <v-list-item class="grow">
+      <v-list-item
+        :to="`/pv/${user.id}`"
+        class="grow"
+      >
         <v-list-item-avatar color="grey darken-3">
           <v-img
             class="elevation-6"
@@ -110,7 +115,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>{{ $store.state.myNick }}</v-list-item-title>
+          <v-list-item-title v-if="user">{{ `${user.name} ${user.family}`}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -146,12 +151,12 @@ export default {
       'rooms',
       'roomMessages',
       'pvRooms',
-      'pvMessages'
-    ])
-  },
-  methods: {
-    toggleAC () {
-      this.$store.commit("toggleAC");
+      'pvMessages',
+      'currentChannel'
+    ]),
+    ...mapState('auth', ['user']),
+    filteredPv () {
+      return !this.user ? this.pvRooms : this.pvRooms.filter(item => item._id !== this.user.id)
     }
   },
 };

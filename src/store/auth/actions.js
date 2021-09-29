@@ -18,7 +18,16 @@ export async function login({ dispatch, commit }, payload) {
 
     router.push("/").catch(() => {});
   } catch (error) {
-    console.log(error);
+    if (error?.data?.message) {
+      commit(
+        "showSnackbar",
+        {
+          content: error.data.message,
+          color: "error",
+        },
+        { root: true }
+      );
+    }
   }
 }
 
@@ -38,7 +47,16 @@ export async function signup({ dispatch, commit }, payload) {
 
     router.push("/").catch(() => {});
   } catch (error) {
-    console.log(error);
+    if (error?.data?.message) {
+      commit(
+        "showSnackbar",
+        {
+          content: error.data.message,
+          color: "error",
+        },
+        { root: true }
+      );
+    }
   }
 }
 

@@ -12,6 +12,7 @@
       <Members
         :roomId="receiver"
         :members="members"
+        :userId="user.id"
         @add-member="addMember"
       ></Members>
     </div>
@@ -27,6 +28,7 @@
       <Members
         :roomId="receiver"
         :members="members"
+        :userId="user.id"
         @add-member="addMember"
       ></Members>
     </v-navigation-drawer>

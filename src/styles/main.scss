@@ -1,9 +1,21 @@
+@import "./_variables";
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.v-application {
+  .text-h4,
+  .text-h5,
+  .display-1,
+  * {
+    font-family: $font-family !important;
+    letter-spacing: 0 !important;
+  }
 }
 
 #nav {
@@ -139,6 +151,8 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   border-top: 1px solid #363636 !important;
+  display: flex;
+  flex-direction: column;
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -167,9 +181,9 @@ body {
   min-height: 0;
 }
 
-.notification {
-  border-left: 1.5px solid white;
-}
+// .notification {
+//   border-left: 1.5px solid white;
+// }
 
 .channel-title {
   text-align: left;
@@ -299,6 +313,16 @@ body {
     width: 100%;
     align-items: stretch;
     background: #1e1e1e !important;
+    position: relative;
+    .submit-btn {
+      position: absolute;
+      right: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 6px;
+    }
 
     input {
       color: white !important;
@@ -322,4 +346,31 @@ body {
       background: #28292b;
     }
   }
+}
+
+.v-application.v-application--is-rtl {
+  .guilds {
+    right: 0;
+    border-right: none;
+    border-left: 1px solid #363636;
+  }
+
+  .base {
+    right: 82px;
+    left: 0;
+  }
+  .channel-title {
+    text-align: right;
+  }
+  .head-tools {
+    float: left;
+  }
+  .chat-form .submit-btn {
+    left: 0;
+    right: initial;
+  }
+}
+
+.v-btn {
+  letter-spacing: 0;
 }

@@ -1,10 +1,11 @@
 import Vue from "vue";
 import SocketIO from "../socket.io";
+import { baseURL } from "@/config";
 
 const options = {
   transports: ["websocket"],
 };
-const url = "http://localhost:3333";
+const url = baseURL;
 
 Vue.use(
   new SocketIO({

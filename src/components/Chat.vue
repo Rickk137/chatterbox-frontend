@@ -8,24 +8,83 @@
         />
 
         <div class="chat-form">
+
           <v-text-field
             class="mx-5 my-3 chat-form-tf"
-            label="Send message..."
+            :label="`${$t('sendMessage')}...`"
             solo
             flat
             v-model="msginform"
             autocomplete="off"
-            @keyup.enter="sendChat"
+            @keyup.enter="sendTextMessage"
             @keypress="setCanMessageSubmit"
           >
           </v-text-field>
+          <div class="submit-btn mx-8">
+
+            <Uploader v-model="file" />
+
+            <v-btn
+              :disabled="!this.msginform"
+              @click="sendTextMessage"
+              dark
+              icon
+            >
+              <v-icon v-text="'mdi-send'"></v-icon>
+            </v-btn>
+
+          </div>
         </div>
       </div>
     </div>
+
+    <v-dialog
+      @input="file = null"
+      :value="!!file"
+      max-width="600px"
+      dark
+      persistent
+    >
+      <v-card
+        dark
+        flat
+        tile
+        width="100%"
+        height="100%"
+      >
+
+        <v-card-text>
+          <p class="mb-5">
+            آیا از ارسال این فایل اطمینان دارید؟
+          </p>
+          <Media :file="file" />
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="file = null"
+            v-t="'close'"
+          />
+          <v-btn
+            color="blue darken-1"
+            text
+            :disabled="!file"
+            @click="sendFile"
+            v-t="'send'"
+          />
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import Media from "@/components/Media.vue";
+import Uploader from "@/components/Uploader.vue";
 import Messages from '@/components/common/Messages.vue';
 
 export default {
@@ -45,11 +104,14 @@ export default {
   },
   components: {
     Messages,
+    Uploader,
+    Media
   },
   data () {
     return {
       chats: [],
-      msginform: ""
+      msginform: "",
+      file: null
     };
   },
 
@@ -57,16 +119,33 @@ export default {
     setCanMessageSubmit () {
       this.canMessageSubmit = true;
     },
-    sendChat () {
-      this.$socket.emit('message', {
+    sendTextMessage () {
+      if (!this.msginform) return;
+
+      this.sendChat({
         content: this.msginform,
-        receiver: this.receiver,
-        type: this.receiverType
-      })
+      });
       this.msginform = '';
+    },
+    sendChat (msg) {
+
+      this.$socket.emit('message', {
+        receiver: this.receiver,
+        type: this.receiverType,
+        ...msg
+      })
+
       setTimeout(() => {
         this.$emit('scrollToEnd')
       }, 100)
+    },
+    sendFile () {
+      this.sendChat({
+        content: this.file?.filename,
+        contentType: this.file?.mimetype?.includes('image') ? 'IMAGE' : 'FILE'
+      });
+
+      this.file = null;
     }
   }
 };

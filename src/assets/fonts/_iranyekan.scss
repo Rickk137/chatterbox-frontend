@@ -1,0 +1,64 @@
+$iranyekan-font-path: "~@/assets/fonts/iranyekan";
+
+@font-face {
+    font-family: 'IRANYekan';
+    src: url($iranyekan-font-path + '/eot/iranyekanweblight.eot');
+    src: url($iranyekan-font-path + '/eot/iranyekanweblight.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url($iranyekan-font-path + '/woff2/iranyekanweblight.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url($iranyekan-font-path + '/woff/iranyekanweblight.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url($iranyekan-font-path + '/ttf/iranyekanweblight.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANYekan';
+    src: url($iranyekan-font-path + '/eot/iranyekanwebregular.eot');
+    src: url($iranyekan-font-path + '/eot/iranyekanwebregular.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url($iranyekan-font-path + '/woff2/iranyekanwebregular.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url($iranyekan-font-path + '/woff/iranyekanwebregular.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url($iranyekan-font-path + '/ttf/iranyekanwebregular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANYekan';
+    src: url($iranyekan-font-path + '/eot/iranyekanwebbold.eot');
+    src: url($iranyekan-font-path + '/eot/iranyekanwebbold.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url($iranyekan-font-path + '/woff2/iranyekanwebbold.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url($iranyekan-font-path + '/woff/iranyekanwebbold.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url($iranyekan-font-path + '/ttf/iranyekanwebbold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANYekanDigits';
+    src: url($iranyekan-font-path + '/eot/IRANYekanMsn.eot');
+    src: url($iranyekan-font-path + '/eot/IRANYekanMsn.eot?#iefix') format('embedded-opentype'),
+        /* IE6-8 */
+        url($iranyekan-font-path + '/woff2/IRANYekanMsn.woff2') format('woff2'),
+        /* FF39+,Chrome36+, Opera24+*/
+        url($iranyekan-font-path + '/woff/IRANYekanMsn.woff') format('woff'),
+        /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+        url($iranyekan-font-path + '/ttf/IRANYekanMsn.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IRANSans';
+    src: url($iranyekan-font-path + '/iransansweb.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}

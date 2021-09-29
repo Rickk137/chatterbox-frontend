@@ -3,4 +3,10 @@ export const receiverTypes = {
   ROOM: 1,
 };
 
+export const memberRole = {
+  OWNER: 0,
+  ADMIN: 1,
+  USER: 2,
+};
+
 export const LIMIT = 20;

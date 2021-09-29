@@ -5,6 +5,10 @@ import createPersistedState from "vuex-persistedstate";
 import authModuel from "./auth";
 import chatModule from "./chat/index";
 
+import i18n, { getLanguage } from "@/translation/i18n";
+import vuetify from "@/plugins/vuetify";
+import axios from "axios";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,8 +16,6 @@ export default new Vuex.Store({
     channels: [],
     currentChannel: 0,
     myIcon: "guest.png",
-    ownerIcon:
-      "https://media.discordapp.net/attachments/603940670914297867/685302017165623352/plusrekt1.jpg?width=513&height=513",
     myNick: "noname",
     members: [],
     member: 0,
@@ -21,11 +23,14 @@ export default new Vuex.Store({
     showAC: false,
     chats: [],
     loggedIn: false,
-
     snackbar: null,
     callingDialog: null,
+    locale: getLanguage(),
   },
   mutations: {
+    setLocale(store, locale) {
+      store.locale = locale;
+    },
     showSnackbar(store, snackbar) {
       store.snackbar = snackbar;
     },
@@ -101,6 +106,13 @@ export default new Vuex.Store({
         dispatch("auth/fetchUser");
         dispatch("chat/getRooms");
       }
+    },
+    changeLanguage({ commit }, locale = "fa") {
+      vuetify.framework.rtl = locale === "fa";
+      i18n.locale = locale;
+      localStorage.setItem("lang", locale);
+      commit("setLocale", locale);
+      axios.defaults.headers["x-custom-lang"] = locale;
     },
   },
   modules: {

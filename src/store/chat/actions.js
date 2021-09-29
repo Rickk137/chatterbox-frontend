@@ -1,6 +1,7 @@
 import axios from "axios";
 import { receiverTypes, LIMIT } from "@/constants/types";
 import store from "../index";
+import router from "@/router";
 
 export function changeChannel({ commit }, { channel }) {
   commit("SET_CURRENT_CHANNEL", channel);
@@ -63,6 +64,7 @@ export async function getRoomMessages({ commit, state }, { roomId, loadMore }) {
     return data;
   } catch (error) {
     console.log(error);
+    router.push("/").catch(() => {});
   }
 }
 

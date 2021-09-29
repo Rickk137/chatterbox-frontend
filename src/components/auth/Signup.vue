@@ -1,13 +1,21 @@
 <template>
   <v-row class="fill-height">
+    <LanguageSwitch class="lang-switcher" />
+
     <v-col
       cols="12"
       md="5"
       class="teal primary"
     >
       <v-card-text class="white--text mt-12">
-        <h1 class="text-center display-1">Welcome Back!</h1>
-        <h5 class="text-center">To Keep connected with us please login with your personnel info</h5>
+        <h1
+          class="text-center display-1"
+          v-t="'welcome'"
+        ></h1>
+        <h5
+          class="text-center"
+          v-t="'signInText'"
+        ></h5>
       </v-card-text>
       <div class="text-center">
         <v-btn
@@ -15,7 +23,8 @@
           outlined
           dark
           @click="$emit('login')"
-        >Sign in</v-btn>
+          v-t="'signIn'"
+        />
       </div>
     </v-col>
 
@@ -25,49 +34,66 @@
       class="mb-10"
     >
       <v-card-text class="mt-12">
-        <h1 class="text-center display-2 teal--text text--primary">Create Account</h1>
+        <h1
+          class="text-center teal--text text--primary mb-4"
+          v-t="'createAccount'"
+        ></h1>
 
-        <v-form>
+        <v-form
+          ref="signup"
+          @submit.prevent="handleSignup"
+          v-model="valid"
+          lazy-validation
+        >
           <v-text-field
             v-model="name"
-            label="Name"
+            :label="$t('name')"
             name="Name"
             prepend-icon="mdi-account"
             type="text"
+            required
+            :rules="required"
             color="teal primary"
           />
           <v-text-field
             v-model="family"
-            label="Family"
+            :label="$t('family')"
             name="Family"
             prepend-icon="mdi-account"
             type="text"
+            required
+            :rules="required"
             color="teal primary"
           />
           <v-text-field
             v-model="username"
-            label="Username"
+            :label="$t('username')"
             name="Username"
             prepend-icon="mdi-account"
             type="text"
+            required
+            :rules="required"
             color="teal primary"
           />
           <v-text-field
             v-model="email"
-            label="Email"
+            :label="$t('email')"
             name="Email"
             prepend-icon="mdi-email"
             type="text"
+            required
+            :rules="emailRules"
             color="teal primary"
           />
-
           <v-text-field
             v-model="password"
             id="password"
-            label="Password"
+            :label="$t('password')"
             name="password"
             prepend-icon="mdi-lock"
             type="password"
+            required
+            :rules="passwordRules"
             color="teal primary"
           />
         </v-form>
@@ -78,23 +104,40 @@
           color="teal primary"
           dark
           @click="handleSignup"
-        >SIGN UP</v-btn>
+          v-t="'signup'"
+        />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import { mapActions } from 'vuex';
 
 export default {
+  components: {
+    LanguageSwitch,
+  },
   data () {
     return {
-      email: 'peymannaderi3@gmail.com',
-      username: 'username',
-      name: 'name',
-      family: 'family',
-      password: '123456'
+      email: '',
+      username: '',
+      name: '',
+      family: '',
+      password: '',
+      valid: null,
+      required: [
+        v => !!v || this.$t('rules.required'),
+      ],
+      emailRules: [
+        v => !!v || this.$t('rules.required'),
+        v => /.+@.+\..+/.test(v) || this.$t('rules.notValid'),
+      ],
+      passwordRules: [
+        v => !!v || this.$t('rules.required'),
+        v => (v && v.length >= 6) || this.$t('rules.minCharacters', { count: 6 }),
+      ],
     }
   },
   methods: {
@@ -102,18 +145,30 @@ export default {
       'signup',
     ]),
     handleSignup () {
-      const payload = {
-        email: this.email,
-        username: this.username,
-        name: this.name,
-        family: this.family,
-        password: this.password
+      if (this.$refs.signup.validate()) {
+        const payload = {
+          email: this.email,
+          username: this.username,
+          name: this.name,
+          family: this.family,
+          password: this.password
+        }
+        this.signup(payload);
       }
-      this.signup(payload);
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.lang-switcher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.v-application--is-rtl .lang-switcher {
+  right: 0;
+  left: unset;
+}
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <v-row style="min-height: 568px;">
+  <v-row style="min-height: 552px;">
+    <LanguageSwitch class="lang-switcher" />
+
     <v-col
       class="fill-height"
       cols="12"
@@ -8,29 +10,47 @@
       justify="center"
     >
       <v-card-text class="mt-12">
-        <h1 class="text-center display-2 teal--text text--primary">Sign in</h1>
+        <Uploader />
 
-        <v-form>
+        <h1
+          class="text-center teal--text text--primary mb-5"
+          v-t="'signIn'"
+        ></h1>
+
+        <v-form
+          ref="form"
+          @submit.prevent="handleLogin"
+          v-model="valid"
+          lazy-validation
+        >
+
           <v-text-field
             v-model="email"
-            label="Email"
+            :label="$t('email')"
+            :rules="emailRules"
             name="Email"
             prepend-icon="mdi-email"
             type="text"
+            required
             color="teal primary"
           />
 
           <v-text-field
             v-model="password"
             id="password"
-            label="Password"
+            :rules="passwordRules"
+            :label="$t('Password')"
             name="password"
             prepend-icon="mdi-lock"
             type="password"
+            required
             color="teal primary"
           />
         </v-form>
-        <h3 class="text-center mt-4">Forgot your password ?</h3>
+        <!-- <h3
+          class="text-center mt-4"
+          v-t="'forgotPassword'"
+        ></h3> -->
       </v-card-text>
       <div class="text-center mt-3">
         <v-btn
@@ -38,7 +58,8 @@
           dark
           large
           @click="handleLogin"
-        >SIGN IN</v-btn>
+          v-t="'signIn'"
+        />
       </div>
     </v-col>
     <v-col
@@ -47,8 +68,14 @@
       class="primary"
     >
       <v-card-text class="white--text mt-12">
-        <h1 class="text-center display-1">Hello, Friend!</h1>
-        <h5 class="text-center">Enter your personal details and start journay with us</h5>
+        <h1
+          class="text-center display-1"
+          v-t="'welcome'"
+        ></h1>
+        <h5
+          class="text-center"
+          v-t="'signUpText'"
+        ></h5>
       </v-card-text>
       <div class="text-center">
         <v-btn
@@ -56,20 +83,36 @@
           outlined
           dark
           @click="$emit('signUp')"
-        >SIGN UP</v-btn>
+          v-t="'signup'"
+        />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import Uploader from "@/components/Uploader.vue";
+import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import { mapActions } from 'vuex';
 
 export default {
+  components: {
+    LanguageSwitch,
+    Uploader
+  },
   data () {
     return {
-      email: 'peymannaderi3@gmail.com',
-      password: '123456'
+      valid: false,
+      email: '',
+      password: '',
+      emailRules: [
+        v => !!v || this.$t('rules.required'),
+        v => /.+@.+\..+/.test(v) || this.$t('rules.notValid'),
+      ],
+      passwordRules: [
+        v => !!v || this.$t('rules.required'),
+        v => (v && v.length >= 6) || this.$t('rules.minCharacters', { count: 6 }),
+      ],
     }
   },
   methods: {
@@ -77,11 +120,23 @@ export default {
       'login',
     ]),
     handleLogin () {
-      this.login({ email: this.email, password: this.password });
+      if (this.$refs.form.validate()) {
+        this.login({ email: this.email, password: this.password });
+      }
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.lang-switcher {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+.v-application--is-rtl .lang-switcher {
+  left: 0;
+  right: unset;
+}
 </style>

@@ -10,12 +10,13 @@
       class="server-info flex-1"
       dense
     >
-      <v-subheader>Members ({{ members.length }})</v-subheader>
+      <v-subheader>{{$t('members', { count: members.length })}} </v-subheader>
       <v-list-item-group v-model="member">
         <v-list-item
           v-for="(item, i) in members"
           :key="i"
           :to="'/pv/' + item._id"
+          class="member-item"
         >
           <!-- <img
               :src="item.img"
@@ -27,11 +28,11 @@
           >mdi-account</v-icon>
           <v-list-item-content>
             <v-list-item-title
-              class="channel-title"
+              class="member-title pb-1"
               v-text="`${item.username}`"
             ></v-list-item-title>
             <v-list-item-title
-              class="channel-title"
+              class="member-title pt-1"
               v-text="`${item.name} ${item.family}`"
             ></v-list-item-title>
           </v-list-item-content>
@@ -43,6 +44,7 @@
     <v-list
       width="100%"
       dense
+      v-if="canAddMember"
     >
       <v-list-item @click="showAddMember = true">
         <v-list-item-icon>
@@ -51,7 +53,7 @@
         <v-list-item-content>
           <v-list-item-title
             class="channel-title"
-            v-text="'Add Member'"
+            v-text="$t('addMember')"
           ></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -64,7 +66,10 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">Add Member to the Room</span>
+          <span
+            v-t="'addMemberToRoom'"
+            class="text-h5"
+          />
         </v-card-title>
 
         <v-card-text>
@@ -78,9 +83,9 @@
             large
             :disabled="!newUser"
             @click="addUser"
-          >
-            Add
-          </v-btn>
+            v-t="'add'"
+          />
+
         </v-card-text>
 
       </v-card>
@@ -90,6 +95,7 @@
 
 <script>
 import UserSelect from './common/UserSelect.vue';
+import { memberRole } from "@/constants/types";
 
 export default {
   props: {
@@ -98,6 +104,10 @@ export default {
       default: () => ([])
     },
     roomId: {
+      type: String,
+      default: ''
+    },
+    userId: {
       type: String,
       default: ''
     },
@@ -112,9 +122,16 @@ export default {
   components: {
     UserSelect,
   },
+  computed: {
+    canAddMember () {
+      const me = (this.members || []).find(item => item._id === this.userId);
+      return me && me.role < memberRole.USER;
+    }
+  },
   methods: {
     async addUser () {
       if (!this.newUser || !this.roomId) return;
+
       try {
         await this.axios.post(`/rooms/${this.roomId}/member`,
           {
@@ -131,3 +148,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.member-item {
+  direction: ltr;
+  .member-title {
+    font-size: 16px;
+    text-align: left;
+  }
+}
+</style>

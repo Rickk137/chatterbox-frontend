@@ -1,7 +1,7 @@
 <template>
   <v-content>
     <div class="dc-container">
-      <Channels />
+      <Toolbar />
 
       <div class="base">
         <div class="base-content">
@@ -31,49 +31,8 @@
                   />
                 </div>
               </div>
-              <div
-                class="ch"
-                v-if="$store.state.channels.length > 0"
-              >
-                <v-icon
-                  dark
-                  left
-                >{{
-                  $store.state.channels[getCh()].icon
-                }}</v-icon>
-                {{ $store.state.channels[getCh()].text }}
-              </div>
-              <div class="head-tools">
-                <div class="tool-icons-container">
-                  <div class="hidden-sm-and-down">
-                    <div class="tool-icon">
-                      <v-btn icon>
-                        <v-icon color="white">mdi-bell</v-icon>
-                      </v-btn>
-                    </div>
-                    <div class="tool-icon">
-                      <v-btn icon>
-                        <v-icon color="white">mdi-cloud</v-icon>
-                      </v-btn>
-                    </div>
-                    <div class="tool-icon">
-                      <v-btn icon>
-                        <v-icon color="white">mdi-account-supervisor-circle</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
-                  <div class="hidden-md-and-up">
-                    <div class="tool-icon mr-n4">
-                      <v-btn icon>
-                        <v-icon
-                          color="white"
-                          @click="drawer = !drawer"
-                        >mdi-account-group</v-icon>
-                      </v-btn>
-                    </div>
-                  </div>
 
-                </div>
+              <div class="head-tools">
 
                 <!-- <v-text-field
                   dark
@@ -85,6 +44,8 @@
                   class="hidden-sm-and-down mx-2 head-search"
                   autocomplete="off"
                 ></v-text-field> -->
+
+                <LanguageSwitch />
 
                 <v-menu
                   bottom
@@ -102,9 +63,11 @@
                   </template>
 
                   <v-list>
-                    <v-list-item @click="logout">
-                      Logout
-                    </v-list-item>
+                    <v-list-item
+                      @click="logout"
+                      v-t="'logout'"
+                    />
+
                   </v-list>
                 </v-menu>
               </div>
@@ -119,26 +82,22 @@
         </div>
       </div>
     </div>
-    <AvatarChanger></AvatarChanger>
-    <CallingDialog />
   </v-content>
 </template>
 
 <script>
-import CallingDialog from "@/components/CallingDialog.vue";
-import Channels from "@/components/Channels.vue";
+import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
+import Toolbar from "@/components/Toolbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import AvatarChanger from "@/components/AvatarChanger";
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: "MainLayout",
 
   components: {
-    Channels,
+    Toolbar,
     Sidebar,
-    AvatarChanger,
-    CallingDialog
+    LanguageSwitch
   },
   data () {
     return {
@@ -158,12 +117,6 @@ export default {
       'logout',
     ]),
 
-    getCh () {
-      return (this.cache =
-        this.$store.state.currentChannel === undefined
-          ? this.cache
-          : this.$store.state.currentChannel);
-    },
   },
 };
 </script>

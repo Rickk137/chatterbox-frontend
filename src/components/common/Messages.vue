@@ -8,20 +8,46 @@
       direction="top"
       spinner="circles"
       @infinite="($state) => $emit('loadMore', $state)"
-    ></infinite-loading>
+    >
+
+      <div slot="no-more"></div>
+      <div slot="no-results"></div>
+
+    </infinite-loading>
     <li
       v-for="(message, i) in messages"
       :key="message._id || i"
       :class="{other: userId !== message.author, self:  userId === message.author}"
-    >{{message.content}}</li>
+    >
+      <div v-if="!['IMAGE', 'FILE'].includes(message.contentType)">
+        {{message.content}}
+      </div>
+
+      <div v-if="message.contentType === 'IMAGE'">
+        <img
+          :src="getMediaLink(message)"
+          style="max-width: 100%; max-width: 400px;"
+        />
+      </div>
+
+      <div v-if="message.contentType === 'FILE'">
+
+        <a
+          target="_blank"
+          :href="getMediaLink(message)"
+        >
+          {{getMediaLink(message)}}
+        </a>
+      </div>
+
+    </li>
   </ul>
 </template>
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
-
-
 import { mapState } from 'vuex';
+import { baseURL } from "@/config";
 
 export default {
   components: {
@@ -39,6 +65,11 @@ export default {
     ]),
     userId () {
       return this.user?.id
+    }
+  },
+  methods: {
+    getMediaLink (message) {
+      return `${baseURL}media/${message.content}`
     }
   },
 }
@@ -64,12 +95,12 @@ export default {
   display: inline-block;
   padding: 14px;
   margin: 0 0 10px 0;
-  font: 12px/16px "Noto Sans", sans-serif;
   border-radius: 10px;
   background-color: rgba(25, 147, 147, 0.2);
   word-wrap: break-word;
   max-width: 80%;
   min-width: 100px;
+  font-size: 14px;
 }
 
 .messages li.self {
@@ -86,5 +117,15 @@ export default {
   -webkit-animation: show-chat-odd 0.15s 1 ease-in;
   color: #0ad5c1;
   align-self: flex-start;
+}
+
+.v-application.v-application--is-rtl {
+  .messages li.other {
+    text-align: right;
+  }
+
+  .messages li.self {
+    text-align: left;
+  }
 }
 </style>
