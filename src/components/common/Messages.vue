@@ -17,8 +17,17 @@
     <li
       v-for="(message, i) in messages"
       :key="message._id || i"
-      :class="{other: userId !== message.author, self:  userId === message.author}"
+      :class="{other: !checkSelf(message), self: checkSelf(message)}"
     >
+      <div
+        class="tooltiptext"
+        v-if="typeof message.author === 'object'"
+      >
+        {{`${message.author.name} ${message.author.family}`}}
+      </div>
+      <div>
+        {{message.sender}}
+      </div>
       <div v-if="!['IMAGE', 'FILE'].includes(message.contentType)">
         {{message.content}}
       </div>
@@ -81,6 +90,9 @@ export default {
     getDate (date) {
       return moment(new Date(date),).locale('fa')
         .format('HH:mm - MM/DD');
+    },
+    checkSelf (message) {
+      return this.userId === message.author || this.userId === message.author?._id;
     }
   },
 }
@@ -161,5 +173,40 @@ export default {
     left: initial;
     right: 8px;
   }
+}
+
+.messages li .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.messages li .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.messages li:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 </style>
