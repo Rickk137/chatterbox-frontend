@@ -1,8 +1,5 @@
 <template>
   <div>
-    <router-link :to="'/call/'+ receiver">
-      call
-    </router-link>
     <Chat
       :receiverType="receiverType"
       :receiver="receiver"

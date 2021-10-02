@@ -96,8 +96,7 @@ export default {
     }
   },
   beforeDestroy () {
-    console.log("this.:", this.call)
-    this.call.close();
+    this.call?.close();
   }
 }
 </script>
@@ -117,8 +116,8 @@ export default {
   gap: 8px;
   width: 100%;
   video {
-    height: 100%;
-    width: 100%;
+    height: 100px;
+    width: 100px;
     object-fit: cover;
     border-radius: 10px;
     overflow: hidden;

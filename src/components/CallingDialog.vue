@@ -3,6 +3,7 @@
     <v-dialog
       v-model="showDialog"
       persistent
+      dark
       max-width="290"
     >
       <v-card>
@@ -12,7 +13,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="green darken-1"
+            color="darken-1"
             text
             @click="showDialog = false"
           >
@@ -43,18 +44,20 @@ export default {
       },
       set: function (newValue) {
         if (!newValue)
-          this.setCallingDialog(null)
+          this.setCallingDialog({ userId: null, peerId: null })
       }
     }
   },
   methods: {
     ...mapMutations([
       'setCallingDialog',
+      'setMeetingStatus',
+      'setMeetingDialog',
     ]),
     accept () {
-      const link = '/call/' + this.callingDialog + '/accept';
+      this.setMeetingStatus('INCOMING');
+      this.setMeetingDialog(this.callingDialog);
       this.showDialog = false;
-      this.$router.push(link);
     }
   },
 }

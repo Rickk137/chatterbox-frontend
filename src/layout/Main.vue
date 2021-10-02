@@ -2,6 +2,8 @@
   <v-content>
     <div class="dc-container">
       <Toolbar />
+      <MeetingDialog />
+      <CallingDialog />
 
       <div class="base">
         <div class="base-content">
@@ -90,6 +92,8 @@ import LanguageSwitch from "@/components/common/LanguageSwitch.vue";
 import Toolbar from "@/components/Toolbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import { mapActions, mapState } from 'vuex';
+import MeetingDialog from "@/components/MeetingDialog.vue"
+import CallingDialog from "@/components/CallingDialog.vue"
 
 export default {
   name: "MainLayout",
@@ -97,7 +101,9 @@ export default {
   components: {
     Toolbar,
     Sidebar,
-    LanguageSwitch
+    LanguageSwitch,
+    MeetingDialog,
+    CallingDialog
   },
   data () {
     return {

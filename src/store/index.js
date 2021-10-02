@@ -24,18 +24,32 @@ export default new Vuex.Store({
     chats: [],
     loggedIn: false,
     snackbar: null,
-    callingDialog: null,
     locale: getLanguage(),
+
+    callingDialog: null,
+
+    meetingDialog: null,
+    meetingStatus: null,
+    peerId: null,
   },
   mutations: {
+    setMeetingStatus(store, meetingStatus) {
+      store.meetingStatus = meetingStatus;
+    },
+    setMeetingDialog(store, meetingDialog) {
+      store.meetingDialog = meetingDialog;
+    },
+    setCallingDialog(store, { userId, peerId }) {
+      store.callingDialog = userId;
+      if (peerId) {
+        store.peerId = peerId;
+      }
+    },
     setLocale(store, locale) {
       store.locale = locale;
     },
     showSnackbar(store, snackbar) {
       store.snackbar = snackbar;
-    },
-    setCallingDialog(store, userId) {
-      store.callingDialog = userId;
     },
     updateChannels(store, list) {
       store.channels = list;
@@ -113,6 +127,10 @@ export default new Vuex.Store({
       localStorage.setItem("lang", locale);
       commit("setLocale", locale);
       axios.defaults.headers["x-custom-lang"] = locale;
+    },
+    call({ commit }, userId) {
+      commit("setMeetingDialog", userId);
+      commit("setMeetingStatus", "CALLING");
     },
   },
   modules: {

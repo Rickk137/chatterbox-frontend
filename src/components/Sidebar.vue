@@ -37,6 +37,20 @@
                     v-text="`${item.name} ${item.family}`"
                   ></v-list-item-title>
                 </v-list-item-content>
+
+                <v-btn
+                  dark
+                  icon
+                  @click="() => call(item._id)"
+                >
+                  <v-icon
+                    size="20"
+                    class="icon"
+                  >
+                    mdi-phone
+                  </v-icon>
+                </v-btn>
+
               </v-list-item>
             </v-list-item-group>
 
@@ -127,7 +141,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import RoomDialog from '@/components/room/RoomDialog';
 
 export default {
@@ -158,6 +172,9 @@ export default {
     filteredPv () {
       return !this.user ? this.pvRooms : this.pvRooms.filter(item => item._id !== this.user.id)
     }
+  },
+  methods: {
+    ...mapActions(['call']),
   },
 };
 </script>

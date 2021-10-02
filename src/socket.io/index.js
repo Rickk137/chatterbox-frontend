@@ -37,13 +37,13 @@ export default class SocketIO {
 
       if (args.length === 1) args = args[0];
 
+      console.log("event:", event);
       if (event === "message") {
         store.dispatch("chat/newMessage", args);
       } else if (event === "update-rooms") {
         store.dispatch("chat/getRooms", args);
         this.io.emit("join-room");
       } else if (event === "calling") {
-        store.dispatch("init");
         store.commit("setCallingDialog", args);
       }
     };
