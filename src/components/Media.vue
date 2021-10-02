@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { baseURL } from '@/config';
+import { mediaURL } from '@/config';
 
 export default {
   props: {
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     link () {
-      return `${baseURL}media/${this.file?.filename}`
+      return `${mediaURL}media/${this.file?.filename}`
     },
     isImage () {
       return this.file?.mimetype?.includes('image');
