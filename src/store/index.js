@@ -31,6 +31,8 @@ export default new Vuex.Store({
     meetingDialog: null,
     meetingStatus: null,
     peerId: null,
+
+    meetingInfo: null,
   },
   mutations: {
     setMeetingStatus(store, meetingStatus) {
@@ -44,6 +46,9 @@ export default new Vuex.Store({
       if (peerId) {
         store.peerId = peerId;
       }
+    },
+    setMeetingInfo(store, meetingInfo) {
+      store.meetingInfo = meetingInfo;
     },
     setLocale(store, locale) {
       store.locale = locale;

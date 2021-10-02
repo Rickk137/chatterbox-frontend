@@ -1,10 +1,14 @@
 <template>
   <v-card>
-    <v-card-title class="text-h5">
+    <!-- <v-card-title class="text-h5">
       Calling {{meetingDialog}}
     </v-card-title>
     <v-card-title class="text-h5">
       peerId: {{peerId}}
+    </v-card-title> -->
+
+    <v-card-title class="text-h5 justify-center">
+      تماس
     </v-card-title>
 
     <div
@@ -14,12 +18,19 @@
     />
     <v-card-actions>
       <v-spacer></v-spacer>
+
       <v-btn
-        text
-        dark
+        class="red"
+        icon
+        x-large
         @click="close"
       >
-        Close
+        <v-icon
+          size="25"
+          class="icon"
+        >
+          mdi-close
+        </v-icon>
       </v-btn>
 
     </v-card-actions>
@@ -68,6 +79,9 @@ export default {
     this.$socket.emit('call', {
       userId: this.meetingDialog,
       peerId: this.meetingDialog,
+      name: this.user.name,
+      family: this.user.family,
+      usename: this.user.usename,
     })
 
   },
@@ -103,15 +117,14 @@ export default {
       video.addEventListener('loadedmetadata', () => {
         video.play()
       })
-      console.log('addVideoStream: ', { video, stream })
-      console.log('this.$refs.videoGrid: ', this.$refs.videoGrid)
       this.$refs.videoGrid?.append(video)
     },
     close () {
       this.stopStreamedVideo();
       this.call?.close();
-      this.$emit('close');
       this.myPeer.disconnect();
+      this.$socket.emit('reject', this.meetingDialog)
+      this.$emit('close');
     }
   },
 
@@ -124,19 +137,4 @@ export default {
 </script>
 
 <style lang="scss">
-#video-grid {
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(1, 500px);
-  grid-auto-rows: 500px;
-  gap: 8px;
-  width: 100%;
-  video {
-    height: 300px;
-    width: 300px;
-    object-fit: cover;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-}
 </style>

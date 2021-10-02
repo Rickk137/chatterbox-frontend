@@ -45,6 +45,14 @@ export default class SocketIO {
         this.io.emit("join-room");
       } else if (event === "calling") {
         store.commit("setCallingDialog", args);
+        store.commit("setMeetingInfo", args);
+      } else if (event === "reject") {
+        store.commit("setMeetingDialog", null);
+        store.commit("setMeetingInfo", null);
+        store.commit("showSnackbar", {
+          color: "error",
+          content: "تماس رد شد.",
+        });
       }
     };
 
