@@ -121,14 +121,20 @@
         :to="`/pv/${user.id}`"
         class="grow"
       >
-        <v-list-item-avatar color="grey darken-3">
-          <v-img
-            class="elevation-6"
-            :src="$store.state.myIcon"
-          ></v-img>
-        </v-list-item-avatar>
+        <v-btn
+          color="darken-3"
+          icon
+          @click="profileModal = true"
+        >
+          <v-icon
+            size="18"
+            class="icon"
+          >
+            mdi-pen
+          </v-icon>
+        </v-btn>
 
-        <v-list-item-content>
+        <v-list-item-content class="grow">
           <v-list-item-title v-if="user">{{ `${user.name} ${user.family}`}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -137,20 +143,34 @@
       :show="createRoomModal"
       @close="createRoomModal = false"
     />
+    <v-dialog
+      v-model="profileModal"
+      max-width="600px"
+      dark
+    >
+      <ProfileDialog
+        v-if="profileModal"
+        :show="profileModal"
+        @close="profileModal = false"
+      />
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import RoomDialog from '@/components/room/RoomDialog';
+import ProfileDialog from '@/components/ProfileDialog';
 
 export default {
   components: {
-    RoomDialog
+    RoomDialog,
+    ProfileDialog
   },
 
   data () {
     return {
+      profileModal: false,
       createRoomModal: false,
       item: 0,
       items: [

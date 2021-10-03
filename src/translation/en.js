@@ -35,4 +35,5 @@ export default {
   startChat: "Start Chat",
   findUser: "Find user",
   send: "Send",
+  done: "Successfully Done",
 };

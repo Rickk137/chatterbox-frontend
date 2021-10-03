@@ -1,6 +1,7 @@
 import Vue from "vue";
 import axios from "axios";
 import router from "@/router";
+import i18n from "@/translation/i18n";
 
 export async function login({ dispatch, commit }, payload) {
   try {
@@ -74,6 +75,30 @@ export async function fetchUser({ dispatch, commit }) {
     });
 
     commit("SET_USER", user);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function updateProfile({ dispatch, commit }, payload) {
+  try {
+    const { data } = await axios.patch("auth/me", payload);
+    if (!data) {
+      return dispatch("logout");
+    }
+    const { email, name, family, username, _id } = data;
+    const user = { email, name, family, username, id: _id };
+
+    commit("SET_USER", user);
+
+    commit(
+      "showSnackbar",
+      {
+        content: i18n.t("done"),
+        color: "success",
+      },
+      { root: true }
+    );
   } catch (error) {
     console.log(error);
   }
