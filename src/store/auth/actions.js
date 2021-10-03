@@ -101,6 +101,16 @@ export async function updateProfile({ dispatch, commit }, payload) {
     );
   } catch (error) {
     console.log(error);
+    if (error?.data?.message) {
+      commit(
+        "showSnackbar",
+        {
+          content: error.data.message,
+          color: "error",
+        },
+        { root: true }
+      );
+    }
   }
 }
 
