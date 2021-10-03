@@ -1,19 +1,59 @@
 <template>
-  <div v-if="file">
+  <div v-if="filename">
 
-    <img
-      v-if="isImage"
-      :src="link"
-      class="mb-2"
-      style="max-width: 100%;"
-    />
+    <div v-if="contentType === 'IMAGE'">
+      <img
+        :src="link"
+        style="max-width: 100%; max-width: 400px;"
+      />
 
-    <a
-      target="_blank"
-      :href="link"
-    >
-      {{link}}
-    </a>
+    </div>
+
+    <div v-if="contentType === 'AUDIO'">
+      <vue-plyr>
+        <audio
+          controls
+          crossorigin
+          playsinline
+        >
+          <source
+            :src="link"
+            type="audio/mp3"
+          />
+          <source
+            :src="link"
+            type="audio/ogg"
+          />
+        </audio>
+      </vue-plyr>
+
+    </div>
+
+    <div v-if="contentType === 'VIDEO'">
+      <vue-plyr>
+        <video
+          controls
+          crossorigin
+          playsinline
+        >
+          <source
+            :src="link"
+            type="video/mp4"
+          />
+        </video>
+      </vue-plyr>
+
+    </div>
+
+    <div v-if="contentType === 'FILE'">
+
+      <a
+        target="_blank"
+        :href="link"
+      >
+        {{link}}
+      </a>
+    </div>
   </div>
 </template>
 
@@ -22,19 +62,19 @@ import { mediaURL } from '@/config';
 
 export default {
   props: {
-    file: {
-      type: Object,
-      default: null
+    filename: {
+      type: String,
+      default: ''
     },
-
+    contentType: {
+      type: String,
+      default: ''
+    },
   },
   computed: {
     link () {
-      return `${mediaURL}media/${this.file?.filename}`
+      return `${mediaURL}media/${this.filename}`
     },
-    isImage () {
-      return this.file?.mimetype?.includes('image');
-    }
   },
 }
 </script>

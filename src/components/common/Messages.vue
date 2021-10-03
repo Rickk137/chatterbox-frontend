@@ -28,43 +28,35 @@
       <div>
         {{message.sender}}
       </div>
-      <div v-if="!['IMAGE', 'FILE'].includes(message.contentType)">
+      <div v-if="!['IMAGE', 'FILE', 'AUDIO', 'VIDEO'].includes(message.contentType)">
         {{message.content}}
       </div>
       <div class="message-date">
         {{getDate(message.timestamp) | translateNumbers}}
       </div>
-      <div v-if="message.contentType === 'IMAGE'">
-        <img
-          :src="getMediaLink(message)"
-          style="max-width: 100%; max-width: 400px;"
-        />
-      </div>
 
-      <div v-if="message.contentType === 'FILE'">
-
-        <a
-          target="_blank"
-          :href="getMediaLink(message)"
-        >
-          {{getMediaLink(message)}}
-        </a>
-      </div>
+      <Media
+        v-if="['IMAGE', 'AUDIO', 'VIDEO', 'FILE'].includes(message.contentType)"
+        :filename="message.content"
+        :contentType="message.contentType"
+      />
 
     </li>
+
   </ul>
 </template>
 
 <script>
+import Media from "@/components/Media.vue";
 import InfiniteLoading from 'vue-infinite-loading';
 import { mapState } from 'vuex';
-import { mediaURL } from "@/config";
 import moment from 'jalali-moment'
 import translateNumbers from "@/filters/translateNumbers";
 
 export default {
   components: {
     InfiniteLoading,
+    Media
   },
   props: {
     messages: {
@@ -84,9 +76,6 @@ export default {
     translateNumbers
   },
   methods: {
-    getMediaLink (message) {
-      return `${mediaURL}media/${message.content}`
-    },
     getDate (date) {
       return moment(new Date(date),).locale('fa')
         .format('HH:mm - MM/DD');

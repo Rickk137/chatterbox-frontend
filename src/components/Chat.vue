@@ -51,13 +51,19 @@
         tile
         width="100%"
         height="100%"
+        class="pa-5"
       >
 
         <v-card-text>
           <p class="mb-5">
             آیا از ارسال این فایل اطمینان دارید؟
           </p>
-          <Media :file="file" />
+          <Media
+            v-if="file"
+            :filename="file.filename"
+            :contentType="getContentType(file.mimetype)"
+            showlink
+          />
         </v-card-text>
 
         <v-card-actions>
@@ -139,12 +145,22 @@ export default {
         this.$emit('scrollToEnd')
       }, 100)
     },
+    getContentType (mimetype) {
+      if (!mimetype) return 'FILE';
+      if (mimetype?.includes('image'))
+        return 'IMAGE'
+      if (mimetype?.includes('audio'))
+        return 'AUDIO'
+      if (mimetype?.includes('video'))
+        return 'VIDEO'
+      return 'FILE'
+
+    },
     sendFile () {
       this.sendChat({
         content: this.file?.filename,
-        contentType: this.file?.mimetype?.includes('image') ? 'IMAGE' : 'FILE'
+        contentType: this.getContentType(this.file?.mimetype)
       });
-
       this.file = null;
     }
   }
