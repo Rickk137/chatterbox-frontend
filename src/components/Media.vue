@@ -1,5 +1,8 @@
 <template>
-  <div v-if="filename">
+  <div
+    class="media-wrapper"
+    v-if="filename"
+  >
 
     <div v-if="contentType === 'IMAGE'">
       <img
@@ -80,4 +83,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.media-wrapper {
+  overflow: auto;
+}
 </style>
