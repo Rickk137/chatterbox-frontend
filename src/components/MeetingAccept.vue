@@ -54,8 +54,10 @@ export default {
     this.$socket.emit('call-accepted', this.meetingDialog);
 
     this.myPeer = new Peer(this.userId, {
-      host: '/',
-      port: '3001'
+      host: 'https://young-ocean-37802.herokuapp.com/',
+      port: 443,
+      path: '/myapp',
+      secure: true,
     })
     const myVideo = document.createElement('video')
     myVideo.muted = true
